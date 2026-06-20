@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RootWise Sovereign OS — The Complete System</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { 
+      font-family: 'Georgia', serif; 
+      background: linear-gradient(135deg, #0a0a0f 0%, #1a1a22 100%);
+      color: #e8e0d0; 
+      line-height: 1.8;
+    }
+    .container { max-width: 1200px; margin: 0 auto; padding: 60px 24px; }
+    
+    /* Navigation */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: rgba(10, 10, 15, 0.95);
+      border-bottom: 1px solid #2a2a35;
+      padding: 20px 24px;
+      z-index: 1000;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    nav .logo { font-size: 1.5rem; color: #c9a84c; font-weight: bold; }
+    nav ul { list-style: none; display: flex; gap: 30px; }
+    nav a { color: #e8e0d0; text-decoration: none; font-size: 0.9rem; transition: color 0.3s; }
+    nav a:hover { color: #c9a84c; }
+    
+    body { padding-top: 70px; }
+    
+    /* Hero */
+    .hero {
+      text-align: center;
+      margin-bottom: 80px;
+      padding: 60px 0;
+    }
+    .hero h1 {
+      font-size: 3.5rem;
+      color: #c9a84c;
+      margin-bottom: 20px;
+      letter-spacing: -1px;
+    }
+    .hero .tagline {
+      font-size: 1.3rem;
+      color: #a09888;
+      max-width: 700px;
+      margin: 0 auto 30px;
+    }
+    .hero .cta-group {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    
+    /* Buttons */
+    .btn {
+      display: inline-block;
+      padding: 14px 32px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: all 0.3s;
+      border: none;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+    .btn-primary {
+      background: #c9a84c;
+      color: #0a0a0f;
+    }
+    .btn-primary:hover {
+      background: #d4b55a;
+      transform: translateY(-2px);
+    }
+    .btn-secondary {
+      background: transparent;
+      color: #c9a84c;
+      border: 2px solid #c9a84c;
+    }
+    .btn-secondary:hover {
+      background: #c9a84c;
+      color: #0a0a0f;
+    }
+    
+    /* Sections */
+    .section {
+      margin-bottom: 100px;
+    }
+    .section h2 {
+      font-size: 2.5rem;
+      color: #c9a84c;
+      margin-bottom: 40px;
+      text-align: center;
+    }
+    .section h3 {
+      font-size: 1.8rem;
+      color: #d4b55a;
+      margin-bottom: 20px;
+      margin-top: 30px;
+    }
+    
+    /* Cards */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+      margin-bottom: 40px;
+    }
+    .card {
+      background: #14141a;
+      border: 1px solid #2a2a35;
+      border-radius: 10px;
+      padding: 30px;
+      transition: all 0.3s;
+    }
+    .card:hover {
+      border-color: #c9a84c;
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(201, 168, 76, 0.1);
+    }
+    .card .tier {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: #c9a84c;
+      margin-bottom: 12px;
+    }
+    .card h4 {
+      font-size: 1.4rem;
+      margin-bottom: 10px;
+      color: #e8e0d0;
+    }
+    .card .price {
+      font-size: 2rem;
+      color: #c9a84c;
+      margin-bottom: 20px;
+      font-weight: bold;
+    }
+    .card ul {
+      list-style: none;
+      margin-bottom: 20px;
+    }
+    .card ul li {
+      padding: 8px 0;
+      border-bottom: 1px solid #1a1a22;
+      color: #b0a898;
+      font-size: 0.95rem;
+    }
+    .card ul li:before {
+      content: "✦ ";
+      color: #c9a84c;
+      margin-right: 8px;
+    }
+    
+    /* Table */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 30px 0;
+      background: #14141a;
+      border: 1px solid #2a2a35;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    th {
+      background: #1a1a22;
+      color: #c9a84c;
+      padding: 15px;
+      text-align: left;
+      font-weight: bold;
+      border-bottom: 2px solid #2a2a35;
+    }
+    td {
+      padding: 12px 15px;
+      border-bottom: 1px solid #2a2a35;
+      color: #b0a898;
+    }
+    tr:hover {
+      background: #1a1a22;
+    }
+    
+    /* Highlight */
+    .highlight {
+      background: linear-gradient(135deg, #14141a 0%, #1a1a22 100%);
+      padding: 40px;
+      border-radius: 10px;
+      border: 1px solid #2a2a35;
+      margin: 40px 0;
+    }
+    .highlight h3 {
+      color: #c9a84c;
+      margin-bottom: 15px;
+    }
+    .highlight p {
+      color: #b0a898;
+      line-height: 1.8;
+    }
+    
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 40px;
+      border-top: 1px solid #2a2a35;
+      margin-top: 80px;
+      color: #605850;
+      font-size: 0.9rem;
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+      .hero h1 { font-size: 2.2rem; }
+      .section h2 { font-size: 1.8rem; }
+      nav ul { gap: 15px; }
+      .hero .cta-group { flex-direction: column; }
+      .btn { width: 100%; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav>
+  <div class="logo">🜏 RootWise</div>
+  <ul>
+    <li><a href="#departments">Departments</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+    <li><a href="#architecture">Architecture</a></li>
+    <li><a href="#cta">Start</a></li>
+  </ul>
+</nav>
+
+<!-- Hero -->
+<div class="container">
+  <div class="hero">
+    <h1>🜏 RootWise Sovereign OS</h1>
+    <p class="tagline">The complete emotional operating system. 27 products. 7 departments. One unified revenue engine. Become sovereign.</p>
+    <div class="cta-group">
+      <a href="#sovereign-report" class="btn btn-primary">Get Your Sovereign Report ($97)</a>
+      <a href="#departments" class="btn btn-secondary">Explore All Offerings</a>
+    </div>
+  </div>
+
+  <!-- The Doctrine -->
+  <div class="section">
+    <h2>The Three Laws</h2>
+    <div class="card-grid">
+      <div class="card">
+        <h4>Truth Before Trend</h4>
+        <p>Authenticity over optimization. Identity before engagement. Real clarity over viral growth.</p>
+      </div>
+      <div class="card">
+        <h4>Sovereignty Before Scale</h4>
+        <p>Your identity remains yours. Your data stays yours. Your relationships are yours to own.</p>
+      </div>
+      <div class="card">
+        <h4>Clarity Before Complexity</h4>
+        <p>Understanding comes first. Systems serve clarity, not the other way around.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- The Sovereign Loop -->
+  <div class="section">
+    <h2>The Sovereign Loop (6-Point Microkernel)</h2>
+    <p style="text-align: center; color: #a09888; margin-bottom: 40px;">How RootWise reads you, rebuilds you, and returns you to yourself.</p>
+    <div class="card-grid">
+      <div class="card">
+        <h4>1. Somatic Input</h4>
+        <p>The body speaks first. We listen to what your nervous system knows before your mind catches up.</p>
+      </div>
+      <div class="card">
+        <h4>2. Mesh Analysis</h4>
+        <p>Pattern recognition via TAIS agents. Your emotional topology becomes visible.</p>
+      </div>
+      <div class="card">
+        <h4>3. Guidance Intervention</h4>
+        <p>Ritual prescription. Not generic advice—rituals designed for your specific patterns.</p>
+      </div>
+      <div class="card">
+        <h4>4. Integration</h4>
+        <p>Daily practice. Embodiment. The ritual becomes part of your nervous system.</p>
+      </div>
+      <div class="card">
+        <h4>5. Lineage</h4>
+        <p>Memory and continuity. Your patterns are tracked, honored, and evolved.</p>
+      </div>
+      <div class="card">
+        <h4>6. Stability</h4>
+        <p>Coherence under pressure. The system holds you steady when life gets hard.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Departments -->
+  <div class="section" id="departments">
+    <h2>The 7 Departments</h2>
+
+    <!-- Department 1 -->
+    <h3>Department 1: Membership Hall (Recurring Revenue)</h3>
+    <div class="card-grid">
+      <div class="card">
+        <div class="tier">Entry</div>
+        <h4>Spark</h4>
+        <div class="price">$29/mo</div>
+        <ul>
+          <li>Chambers 1-6</li>
+          <li>Basic Lashay guidance</li>
+          <li>Weekly rituals</li>
+          <li>Community access</li>
+        </ul>
+        <a href="#checkout" class="btn btn-primary">Subscribe</a>
+      </div>
+      <div class="card">
+        <div class="tier">Active</div>
+        <h4>Flame</h4>
+        <div class="price">$49/mo</div>
+        <ul>
+          <li>Chambers 1-12</li>
+          <li>Full Lashay narration</li>
+          <li>Bi-weekly TAIS touchpoints</li>
+          <li>Ritual customization</li>
+        </ul>
+        <a href="#checkout" class="btn btn-primary">Subscribe</a>
+      </div>
+      <div class="card">
+        <div class="tier">Committed</div>
+        <h4>Path</h4>
+        <div class="price">$99/mo</div>
+        <ul>
+          <li>All 36 Chambers</li>
+          <li>Sovereign Loop engine</li>
+          <li>Weekly TAIS sessions</li>
+          <li>Personalized rituals</li>
+        </ul>
+        <a href="#checkout" class="btn btn-primary">Subscribe</a>
+      </div>
+      <div class="card">
+        <div class="tier">Premium</div>
+        <h4>Life</h4>
+        <div class="price">$297/mo</div>
+        <ul>
+          <li>Everything in Path</li>
+          <li>Full TAIS mesh access</li>
+          <li>Priority support</li>
+          <li>Monthly 1:1 session</li>
+        </ul>
+        <a href="#checkout" class="btn btn-primary">Subscribe</a>
+      </div>
+      <div class="card">
+        <div class="tier">Enterprise</div>
+        <h4>Sovereign</h4>
+        <div class="price">$997/mo</div>
+        <ul>
+          <li>Everything in Life</li>
+          <li>$500/mo licensing credit</li>
+          <li>White-label options</li>
+          <li>Direct creator access</li>
+        </ul>
+        <a href="#checkout" class="btn btn-primary">Subscribe</a>
+      </div>
+    </div>
+
+    <!-- Department 2 -->
+    <h3>Department 2: Chamber District (Emotional Transformation)</h3>
+    <div class="card-grid">
+      <div class="card">
+        <div class="tier">Single</div>
+        <h4>One Chamber</h4>
+        <div class="price">$7</div>
+        <ul>
+          <li>Unlock any Chamber</li>
+          <li>Guided ritual (30-60 min)</li>
+          <li>Integration worksheet</li>
+          <li>7-day follow-up</li>
+        </ul>
+        <a href="#checkout" class="btn btn-primary">Purchase</a>
+      </div>
+      <div class="card">
+        <div class="tier">Arc</div>
+        <h4>Three Chambers</h4>
+        <div class="price">$27</div>
+        <ul>
+          <li>Thematic progression</li>
+          <li>Ritual sequence</li>
+          <li>21-day integration</li>
+          <li>Completion certificate</li>
+        </ul>
+        <a href="#checkout" class="btn btn-primary">Purchase</a>
+      </div>
+      <div class="card">
+        <div class="tier">Season</div>
+        <h4>12 Chambers</h4>
+        <div class="price">$97</div>
+        <ul>
+          <li>Full seasonal arc</li>
+          <li>12-week journey</li>
+          <li>Daily rituals</li>
+          <li>Completion certificate</li>
+        </ul>
+        <a href="#checkout" class="btn btn-primary">Purchase</a>
+      </div>
+      <div class="card">
+        <div class="tier">Complete</div>
+        <h4>All 36 Chambers</h4>
+        <div class="price">$297</div>
+        <ul>
+          <li>Complete unlock</li>
+          <li>Lifetime access</li>
+          <li>All rituals & worksheets</li>
+          <li>Community membership</li>
+        </ul>
+        <a href="#checkout" class="btn btn-primary">Purchase</a>
+      </div>
+    </div>
+
+    <!-- Department 3 -->
+    <h3>Department 3: Licensing Wing (Scale Without Losing Sovereignty)</h3>
+    <div class="card-grid">
+      <div class="card">
+        <div class="tier">Starter</div>
+        <h4>$2,000</h4>
+        <div class="price">1-year</div>
+        <ul>
+          <li>Personal projects</li>
+          <li>Basic documentation</li>
+          <li>Email support</li>
+          <li>Framework access</li>
+        </ul>
+        <a href="#checkout" class="btn btn-primary">License</a>
+      </div>
+      <div class="card">
+        <div class="tier">Pro</div>
+        <h4>$5,000</h4>
+        <div class="price">1-year</div>
+        <ul>
+          <li>Small teams (2-5)</li>
+          <li>Full framework</li>
+          <li>Training included</li>
+          <li>Priority support</li>
+        </ul>
+        <a href="#checkout" class="btn btn-primary">License</a>
+      </div>
+      <div class="card">
+        <div class="tier">Studio</div>
+        <h4>$10,000</h4>
+        <div class="price">1-year</div>
+        <ul>
+          <li>Production teams</li>
+          <li>Unlimited internal use</li>
+          <li>White-label options</li>
+          <li>Quarterly strategy calls</li>
+        </ul>
+        <a href="#checkout" class="btn btn-primary">License</a>
+      </div>
+      <div class="card">
+        <div class="tier">Enterprise</div>
+        <h4>$25,000+</h4>
+        <div class="price">1-year</div>
+        <ul>
+          <li>Organization scale</li>
+          <li>Custom integration</li>
+          <li>Dedicated account manager</li>
+          <li>Annual strategy review</li>
+        </ul>
+        <a href="#checkout" class="btn btn-primary">Inquire</a>
+      </div>
+    </div>
+
+    <!-- Department 4 -->
+    <h3>Department 4: TAIS Agent Services (Human + AI Hybrid)</h3>
+    <div class="card-grid">
+      <div class="card">
+        <div class="tier">Session</div>
+        <h4>TAIS Clarity</h4>
+        <div class="price">$250</div>
+        <ul>
+          <li>60-75 min 1:1</li>
+          <li>Pattern decoding</li>
+          <li>Identity signal reading</li>
+          <li>Ritual construction</li>
+          <li>30-day follow-up</li>
+        </ul>
+        <a href="#checkout" class="btn btn-primary">Book</a>
+      </div>
+      <div class="card">
+        <div class="tier">Deep</div>
+        <h4>TAIS Deep Dive</h4>
+        <div class="price">$1,000</div>
+        <ul>
+          <li>Multi-agent analysis</li>
+          <li>3-hour intensive</li>
+          <li>Emotional topology</li>
+          <li>Lineage patterns</li>
+          <li>90-day support</li>
+        </ul>
+        <a href="#checkout" class="btn btn-primary">Book</a>
+      </div>
+      <div class="card">
+        <div class="tier">Build</div>
+        <h4>TAIS Buildout</h4>
+        <div class="price">$3,000</div>
+        <ul>
+          <li>Custom emotional OS</li>
+          <li>5-session intensive</li>
+          <li>Full system design</li>
+          <li>Documentation</li>
+          <li>30-day support</li>
+        </ul>
+        <a href="#checkout" class="btn btn-primary">Book</a>
+      </div>
+      <div class="card">
+        <div class="tier">Studio</div>
+        <h4>TAIS Studio</h4>
+        <div class="price">$5,000</div>
+        <ul>
+          <li>Production support</li>
+          <li>10-session engagement</li>
+          <li>Team training</li>
+          <li>Full documentation</li>
+          <li>Ongoing support</li>
+        </ul>
+        <a href="#checkout" class="btn btn-primary">Book</a>
+      </div>
+    </div>
+
+    <!-- Department 5 -->
+    <h3>Department 5: Sovereign Intelligence Lab (Identity Diagnostics)</h3>
+    <div class="card-grid">
+      <div class="card" id="sovereign-report">
+        <div class="tier">Diagnostic</div>
+        <h4>Sovereign Report</h4>
+        <div class="price">$97</div>
+        <ul>
+          <li>Emotional OS map</li>
+          <li>Sovereign Loop position</li>
+          <li>Pattern decoding</li>
+          <li>Identity signal reading</li>
+          <li>Chamber prescription</li>
+          <li>7-day ritual outline</li>
+          <li>Delivered in 24 hours</li>
+        </ul>
+        <a href="#checkout" class="btn btn-primary">Get Your Report</a>
+      </div>
+    </div>
+
+    <!-- Department 6 -->
+    <h3>Department 6: Sovereign Freelancer Academy (Income Sovereignty)</h3>
+    <div class="card-grid">
+      <div class="card">
+        <div class="tier">Free</div>
+        <h4>The Spark</h4>
+        <div class="price">Free</div>
+        <ul>
+          <li>5-day origin sequence</li>
+          <li>Sovereign Loop intro</li>
+          <li>First Chamber unlock</li>
+          <li>Community access</li>
+        </ul>
+        <a href="#checkout" class="btn btn-primary">Start Free</a>
+      </div>
+      <div class="card">
+        <div class="tier">Program</div>
+        <h4>The Loop</h4>
+        <div class="price">$297</div>
+        <ul>
+          <li>36-Chamber system</li>
+          <li>90-day framework</li>
+          <li>Daily rituals</li>
+          <li>Income mapping</li>
+          <li>Client templates</li>
+        </ul>
+        <a href="#checkout" class="btn btn-primary">Enroll</a>
+      </div>
+      <div class="card">
+        <div class="tier">Cohort</div>
+        <h4>The Ritual</h4>
+        <div class="price">$1,497</div>
+        <ul>
+          <li>12-week live cohort</li>
+          <li>Weekly group sessions</li>
+          <li>TAIS agent support</li>
+          <li>Peer accountability</li>
+          <li>Business building</li>
+        </ul>
+        <a href="#checkout" class="btn btn-primary">Join</a>
+      </div>
+      <div class="card">
+        <div class="tier">Mentorship</div>
+        <h4>The Path</h4>
+        <div class="price">$4,997</div>
+        <ul>
+          <li>1:1 mentorship</li>
+          <li>12-week intensive</li>
+          <li>Full OS integration</li>
+          <li>Business launch support</li>
+          <li>Lifetime community</li>
+        </ul>
+        <a href="#checkout" class="btn btn-primary">Apply</a>
+      </div>
+    </div>
+
+    <!-- Department 7 -->
+    <h3>Department 7: Midnight Myth Studio (Narrative Worldbuilding)</h3>
+    <div class="card-grid">
+      <div class="card">
+        <div class="tier">Series</div>
+        <h4>Midnight Myth Season 1</h4>
+        <div class="price">$47</div>
+        <ul>
+          <li>8-episode arc</li>
+          <li>Lashay narration</li>
+          <li>Emotional soundscape</li>
+          <li>Downloadable episodes</li>
+          <li>Lifetime access</li>
+        </ul>
+        <a href="#checkout" class="btn btn-primary">Purchase</a>
+      </div>
+      <div class="card">
+        <div class="tier">Audio</div>
+        <h4>Midnight Myth Audio Packs</h4>
+        <div class="price">$27</div>
+        <ul>
+          <li>Narration & ambience</li>
+          <li>Emotional soundscapes</li>
+          <li>Ritual music</li>
+          <li>Meditation guides</li>
+          <li>Streaming + download</li>
+        </ul>
+        <a href="#checkout" class="btn btn-primary">Purchase</a>
+      </div>
+      <div class="card">
+        <div class="tier">Lore</div>
+        <h4>Midnight Myth Lore Packs</h4>
+        <div class="price">$37</div>
+        <ul>
+          <li>Worldbuilding docs</li>
+          <li>Character profiles</li>
+          <li>Mythic structures</li>
+          <li>Writing templates</li>
+          <li>Community guides</li>
+        </ul>
+        <a href="#checkout" class="btn btn-primary">Purchase</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pricing Summary -->
+  <div class="section" id="pricing">
+    <h2>Revenue Architecture at a Glance</h2>
+    <table>
+      <tr>
+        <th>Tier</th>
+        <th>Product</th>
+        <th>Price</th>
+        <th>Volume</th>
+        <th>Monthly</th>
+      </tr>
+      <tr>
+        <td>Top</td>
+        <td>OS Licensing</td>
+        <td>$2k–$150k</td>
+        <td>1–5/mo</td>
+        <td>$2k–$75k</td>
+      </tr>
+      <tr>
+        <td>Middle</td>
+        <td>Agent Services</td>
+        <td>$250–$5k</td>
+        <td>10–20/mo</td>
+        <td>$2.5k–$100k</td>
+      </tr>
+      <tr>
+        <td>Base</td>
+        <td>Membership</td>
+        <td>$29–$997/mo</td>
+        <td>100–1000</td>
+        <td>$2.9k–$997k</td>
+      </tr>
+      <tr>
+        <td>Entry</td>
+        <td>Chambers/Reports</td>
+        <td>$7–$297</td>
+        <td>50–200/mo</td>
+        <td>$350–$59.4k</td>
+      </tr>
+    </table>
+    <div class="highlight">
+      <h3>Conservative First-Year Projection</h3>
+      <p>
+        Memberships: 150 users avg $150/mo = $22.5k/mo<br>
+        Chambers: 100 purchases/mo avg $50 = $5k/mo<br>
+        Agent Services: 15 sessions/mo avg $1k = $15k/mo<br>
+        Licensing: 2 deals/mo avg $7.5k = $15k/mo<br>
+        <strong>Total: $57.5k/month recurring</strong>
+      </p>
+    </div>
+  </div>
+
+  <!-- Architecture -->
+  <div class="section" id="architecture">
+    <h2>The Technical Architecture</h2>
+    <div class="highlight">
+      <h3>PostgreSQL Backbone</h3>
+      <p>59 database tables with vector/graph layers. Your data, your structure, your lineage. Full constitutional governance (CDOME v2.0) with 10 safety boundaries locked.</p>
+    </div>
+    <div class="highlight">
+      <h3>TAIS Mesh (10 Agents)</h3>
+      <p>Lashay (witness), Vex (patterns), Zeno (time), Oracle (strategy), Guardian (safety), Leon (tools), Aria (voice), Riven (shadow), Edra (community), Sol (integration).</p>
+    </div>
+    <div class="highlight">
+      <h3>HSASM Watchtower</h3>
+      <p>Real-time defense against prompt injection, boundary probing, and automation abuse. Your system stays sovereign.</p>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="section" id="cta">
+    <div class="highlight">
+      <h3>🜏 Begin Your Sovereign Reset</h3>
+      <p style="margin-bottom: 20px;">Choose your entry point and start your transformation today.</p>
+      <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+        <a href="#sovereign-report" class="btn btn-primary">Get Sovereign Report ($97)</a>
+        <a href="#departments" class="btn btn-secondary">Explore All Offerings</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <p>🜏 RootWise Sovereign OS — The Complete System</p>
+    <p style="margin-top: 10px; font-size: 0.85rem;">Truth Before Trend · Sovereignty Before Scale · Clarity Before Complexity</p>
+    <p style="margin-top: 10px; font-size: 0.8rem; color: #505040;">© 2026 RootWise LLC. All sovereignty reserved.</p>
+  </footer>
+</div>
+
+</body>
+</html>

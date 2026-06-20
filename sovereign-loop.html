@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Sovereign Loop - RootWise Sovereign OS</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #0F172A;
+            --accent: #B8860B;
+            --secondary: #1E293B;
+            --light: #F1F5F9;
+            --text: #E2E8F0;
+            --border: #334155;
+            --success: #10B981;
+            --warning: #F59E0B;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            background: linear-gradient(135deg, var(--primary) 0%, #1a1f3a 100%);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            z-index: 1000;
+            padding: 1rem 2rem;
+        }
+
+        nav .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        nav a {
+            color: var(--text);
+            text-decoration: none;
+            transition: color 0.3s;
+            margin-left: 2rem;
+        }
+
+        nav a:hover {
+            color: var(--accent);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Header */
+        .header {
+            padding-top: 100px;
+            padding-bottom: 3rem;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--accent), var(--light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header p {
+            color: #CBD5E1;
+            font-size: 1.1rem;
+        }
+
+        /* Loop Diagram */
+        .loop-container {
+            background: rgba(30, 41, 59, 0.4);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 3rem;
+            margin: 3rem 0;
+            backdrop-filter: blur(10px);
+        }
+
+        .loop-visual {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 3rem 0;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+
+        .loop-step-box {
+            background: rgba(30, 41, 59, 0.6);
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            padding: 2rem;
+            width: 200px;
+            text-align: center;
+            transition: all 0.3s;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .loop-step-box:hover {
+            border-color: var(--accent);
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(184, 134, 11, 0.2);
+        }
+
+        .loop-step-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            background: var(--accent);
+            color: var(--primary);
+            border-radius: 50%;
+            font-weight: bold;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .loop-step-box h3 {
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+
+        .loop-step-box p {
+            color: #CBD5E1;
+            font-size: 0.9rem;
+        }
+
+        /* Daily Check-in */
+        .checkin-section {
+            background: linear-gradient(135deg, rgba(184, 134, 11, 0.1), rgba(30, 41, 59, 0.6));
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            padding: 3rem;
+            margin: 3rem 0;
+        }
+
+        .checkin-section h2 {
+            color: var(--accent);
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .checkin-form {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 2rem;
+        }
+
+        .form-group label {
+            display: block;
+            color: var(--text);
+            margin-bottom: 0.75rem;
+            font-weight: 600;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.75rem;
+            background: rgba(15, 23, 42, 0.5);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text);
+            font-family: inherit;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--accent);
+            background: rgba(184, 134, 11, 0.05);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .emotion-selector {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .emotion-btn {
+            padding: 1rem;
+            background: rgba(15, 23, 42, 0.5);
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            color: var(--text);
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1.5rem;
+        }
+
+        .emotion-btn:hover {
+            border-color: var(--accent);
+            transform: scale(1.1);
+        }
+
+        .emotion-btn.selected {
+            background: rgba(184, 134, 11, 0.2);
+            border-color: var(--accent);
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            width: 100%;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: var(--primary);
+        }
+
+        .btn-primary:hover {
+            background: #D4AF37;
+            transform: translateY(-2px);
+        }
+
+        /* Progress Ring */
+        .progress-ring-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 3rem 0;
+            flex-direction: column;
+        }
+
+        .progress-ring {
+            width: 200px;
+            height: 200px;
+            margin-bottom: 2rem;
+        }
+
+        .progress-text {
+            text-align: center;
+        }
+
+        .progress-text h3 {
+            color: var(--accent);
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .progress-text p {
+            color: #CBD5E1;
+        }
+
+        /* Ritual Cards */
+        .rituals-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .ritual-card {
+            background: rgba(30, 41, 59, 0.6);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2rem;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .ritual-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(184, 134, 11, 0.2);
+        }
+
+        .ritual-card h3 {
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+
+        .ritual-card p {
+            color: #CBD5E1;
+            margin-bottom: 1rem;
+        }
+
+        .ritual-time {
+            display: inline-block;
+            background: rgba(184, 134, 11, 0.1);
+            color: var(--accent);
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        /* Stats */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .stat-card {
+            background: rgba(30, 41, 59, 0.6);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            color: var(--accent);
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: #94A3B8;
+            font-size: 0.9rem;
+        }
+
+        /* Success Message */
+        .success-message {
+            display: none;
+            background: rgba(16, 185, 129, 0.1);
+            border: 2px solid var(--success);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        .success-message.active {
+            display: block;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        .success-message h3 {
+            color: var(--success);
+            margin-bottom: 0.5rem;
+        }
+
+        .success-message p {
+            color: #CBD5E1;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8rem;
+            }
+
+            .loop-visual {
+                flex-direction: column;
+            }
+
+            .loop-step-box {
+                width: 100%;
+            }
+
+            nav a {
+                margin-left: 1rem;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="container">
+            <a href="index.html" class="logo">🜏 RootWise</a>
+            <div>
+                <a href="index.html">Home</a>
+                <a href="mythic-house.html">Mythic House</a>
+                <a href="sovereign-loop.html">Sovereign Loop</a>
+                <a href="#">Codex</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <div class="header">
+        <div class="container">
+            <h1>The Sovereign Loop</h1>
+            <p>Your daily ritual. The 9-step cycle that guides every decision and ensures alignment with your sovereignty.</p>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Loop Diagram -->
+        <div class="loop-container">
+            <h2 style="color: var(--accent); text-align: center; margin-bottom: 2rem;">The 9-Step Cycle</h2>
+            <div class="loop-visual">
+                <div class="loop-step-box" onclick="showStepDetail(1)">
+                    <div class="loop-step-number">1</div>
+                    <h3>Sense</h3>
+                    <p>Body signals, emotions, environment</p>
+                </div>
+                <div style="color: var(--accent); font-size: 1.5rem;">→</div>
+                <div class="loop-step-box" onclick="showStepDetail(2)">
+                    <div class="loop-step-number">2</div>
+                    <h3>Interpret</h3>
+                    <p>Pattern mapping through TAIS</p>
+                </div>
+                <div style="color: var(--accent); font-size: 1.5rem;">→</div>
+                <div class="loop-step-box" onclick="showStepDetail(3)">
+                    <div class="loop-step-number">3</div>
+                    <h3>Propose</h3>
+                    <p>Guidance and interventions</p>
+                </div>
+            </div>
+            <div class="loop-visual">
+                <div class="loop-step-box" onclick="showStepDetail(4)">
+                    <div class="loop-step-number">4</div>
+                    <h3>Decide</h3>
+                    <p>You choose. Sovereignty is yours.</p>
+                </div>
+                <div style="color: var(--accent); font-size: 1.5rem;">→</div>
+                <div class="loop-step-box" onclick="showStepDetail(5)">
+                    <div class="loop-step-number">5</div>
+                    <h3>Act</h3>
+                    <p>Execute with full presence</p>
+                </div>
+                <div style="color: var(--accent); font-size: 1.5rem;">→</div>
+                <div class="loop-step-box" onclick="showStepDetail(6)">
+                    <div class="loop-step-number">6</div>
+                    <h3>Record</h3>
+                    <p>Document in Total Recall Layer</p>
+                </div>
+            </div>
+            <div class="loop-visual">
+                <div class="loop-step-box" onclick="showStepDetail(7)">
+                    <div class="loop-step-number">7</div>
+                    <h3>Integrate</h3>
+                    <p>Practice becomes wisdom</p>
+                </div>
+                <div style="color: var(--accent); font-size: 1.5rem;">→</div>
+                <div class="loop-step-box" onclick="showStepDetail(8)">
+                    <div class="loop-step-number">8</div>
+                    <h3>Evolve</h3>
+                    <p>Identity refines through learning</p>
+                </div>
+                <div style="color: var(--accent); font-size: 1.5rem;">→</div>
+                <div class="loop-step-box" onclick="showStepDetail(9)">
+                    <div class="loop-step-number">9</div>
+                    <h3>Return</h3>
+                    <p>Back to sense. Loop continues.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Daily Check-in -->
+        <div class="checkin-section">
+            <h2>Today's Check-in</h2>
+            <div class="checkin-form">
+                <div class="success-message" id="successMessage">
+                    <h3>✓ Check-in Complete</h3>
+                    <p>Your sovereign loop is activated. You are aligned with your truth.</p>
+                </div>
+
+                <div class="form-group">
+                    <label>How are you feeling right now?</label>
+                    <div class="emotion-selector">
+                        <button class="emotion-btn" onclick="selectEmotion(this)">😌</button>
+                        <button class="emotion-btn" onclick="selectEmotion(this)">😊</button>
+                        <button class="emotion-btn" onclick="selectEmotion(this)">😤</button>
+                        <button class="emotion-btn" onclick="selectEmotion(this)">😔</button>
+                        <button class="emotion-btn" onclick="selectEmotion(this)">🤔</button>
+                        <button class="emotion-btn" onclick="selectEmotion(this)">⚡</button>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="sense">What are you sensing right now?</label>
+                    <textarea id="sense" placeholder="Body signals, emotions, what's happening around you..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="pattern">What pattern do you see?</label>
+                    <textarea id="pattern" placeholder="What is this moment teaching you? What pattern is repeating?"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="decision">What sovereign choice will you make?</label>
+                    <textarea id="decision" placeholder="What action aligns with your truth?"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="commitment">Your commitment for today</label>
+                    <input type="text" id="commitment" placeholder="One thing you will do today with full presence...">
+                </div>
+
+                <button class="btn btn-primary" onclick="submitCheckin()">Complete My Check-in</button>
+            </div>
+        </div>
+
+        <!-- Daily Rituals -->
+        <div>
+            <h2 style="color: var(--accent); text-align: center; margin: 3rem 0 2rem;">Daily Rituals</h2>
+            <div class="rituals-grid">
+                <div class="ritual-card">
+                    <h3>🌅 Morning Stillness</h3>
+                    <p>Begin your day with 5 minutes of conscious presence. Hand over heart. "I am still here."</p>
+                    <span class="ritual-time">5 minutes</span>
+                </div>
+                <div class="ritual-card">
+                    <h3>🔄 Midday Reset</h3>
+                    <p>Pause at noon. Feel your presence. Reconnect with your intention. Three conscious breaths.</p>
+                    <span class="ritual-time">3 minutes</span>
+                </div>
+                <div class="ritual-card">
+                    <h3>📝 Truth Journal</h3>
+                    <p>Write one truth you discovered today. One way you chose sovereignty. One moment of presence.</p>
+                    <span class="ritual-time">10 minutes</span>
+                </div>
+                <div class="ritual-card">
+                    <h3>🌙 Evening Integration</h3>
+                    <p>Reflect on the day. What did your choices teach you? What will you do differently tomorrow?</p>
+                    <span class="ritual-time">10 minutes</span>
+                </div>
+                <div class="ritual-card">
+                    <h3>💭 Emotion Mapping</h3>
+                    <p>Name the emotion. Where do you feel it? What is it telling you? What truth is it pointing toward?</p>
+                    <span class="ritual-time">5 minutes</span>
+                </div>
+                <div class="ritual-card">
+                    <h3>🎯 Decision Practice</h3>
+                    <p>When facing a choice, pause. Sense. Interpret. Propose. Decide. This is sovereignty in action.</p>
+                    <span class="ritual-time">As needed</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Progress Stats -->
+        <div>
+            <h2 style="color: var(--accent); text-align: center; margin: 3rem 0 2rem;">Your Progress</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value">156</div>
+                    <div class="stat-label">Days Consistent</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">487</div>
+                    <div class="stat-label">Check-ins Completed</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">2,341</div>
+                    <div class="stat-label">Rituals Performed</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">94%</div>
+                    <div class="stat-label">Alignment Score</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Call to Action -->
+        <div style="background: linear-gradient(135deg, var(--accent), #D4AF37); color: var(--primary); text-align: center; padding: 3rem; border-radius: 12px; margin: 3rem 0;">
+            <h2 style="color: var(--primary); margin-bottom: 1rem;">Ready to Activate Your Sovereign Loop?</h2>
+            <p style="color: var(--primary); margin-bottom: 2rem;">Complete your first check-in today and begin your journey of conscious sovereignty.</p>
+            <button class="btn btn-primary" style="background: var(--primary); color: var(--accent); max-width: 300px; margin: 0 auto;" onclick="document.querySelector('.checkin-form').scrollIntoView({behavior: 'smooth'})">Start My Check-in</button>
+        </div>
+    </div>
+
+    <script>
+        function selectEmotion(btn) {
+            document.querySelectorAll('.emotion-btn').forEach(b => b.classList.remove('selected'));
+            btn.classList.add('selected');
+        }
+
+        function submitCheckin() {
+            const sense = document.getElementById('sense').value;
+            const pattern = document.getElementById('pattern').value;
+            const decision = document.getElementById('decision').value;
+            const commitment = document.getElementById('commitment').value;
+
+            if (!sense || !pattern || !decision || !commitment) {
+                alert('Please complete all fields to activate your Sovereign Loop.');
+                return;
+            }
+
+            // Show success message
+            const successMsg = document.getElementById('successMessage');
+            successMsg.classList.add('active');
+
+            // Clear form
+            setTimeout(() => {
+                document.getElementById('sense').value = '';
+                document.getElementById('pattern').value = '';
+                document.getElementById('decision').value = '';
+                document.getElementById('commitment').value = '';
+                document.querySelectorAll('.emotion-btn').forEach(b => b.classList.remove('selected'));
+                
+                // Hide success message after 3 seconds
+                setTimeout(() => {
+                    successMsg.classList.remove('active');
+                }, 3000);
+            }, 2000);
+        }
+
+        function showStepDetail(step) {
+            const steps = {
+                1: "Sense: Pay attention to your body signals, emotional state, and what's happening around you.",
+                2: "Interpret: Use the TAIS Mesh to map patterns and understand what this moment is showing you.",
+                3: "Propose: Receive guidance and suggested interventions aligned with your sovereignty.",
+                4: "Decide: You always choose. Sovereignty means the decision is yours.",
+                5: "Act: Execute your choice with full presence and intention.",
+                6: "Record: Document your action and outcome in the Total Recall Layer.",
+                7: "Integrate: Let practice become wisdom. Reflect on what you learned.",
+                8: "Evolve: Your identity refines through each cycle of learning.",
+                9: "Return: Back to sense. The loop continues eternally."
+            };
+            
+            alert(`Step ${step}: ${steps[step]}`);
+        }
+
+        // Allow Enter key to submit form
+        document.addEventListener('keypress', function(event) {
+            if (event.key === 'Enter' && event.ctrlKey) {
+                submitCheckin();
+            }
+        });
+    </script>
+</body>
+</html>

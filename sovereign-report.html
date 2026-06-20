@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sovereign Report - RootWise Sovereign OS</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #0F172A;
+            --accent: #B8860B;
+            --secondary: #1E293B;
+            --light: #F1F5F9;
+            --text: #E2E8F0;
+            --border: #334155;
+            --success: #10B981;
+            --warning: #F59E0B;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            background: linear-gradient(135deg, var(--primary) 0%, #1a1f3a 100%);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            z-index: 1000;
+            padding: 1rem 2rem;
+        }
+
+        nav .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        nav a {
+            color: var(--text);
+            text-decoration: none;
+            transition: color 0.3s;
+            margin-left: 2rem;
+        }
+
+        nav a:hover {
+            color: var(--accent);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Main Layout */
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            padding-top: 100px;
+            padding-bottom: 3rem;
+            align-items: start;
+        }
+
+        /* Left Side - Offer */
+        .offer-section {
+            background: rgba(30, 41, 59, 0.4);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 3rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .offer-section h1 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--accent), var(--light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .offer-section p {
+            color: #CBD5E1;
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+
+        .offer-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Benefits */
+        .benefits {
+            background: rgba(184, 134, 11, 0.1);
+            border-left: 3px solid var(--accent);
+            padding: 2rem;
+            border-radius: 4px;
+            margin: 2rem 0;
+        }
+
+        .benefits h3 {
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+
+        .benefit-item {
+            padding: 0.75rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+            color: #CBD5E1;
+        }
+
+        .benefit-item::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--success);
+            font-weight: bold;
+        }
+
+        /* Included */
+        .included {
+            margin: 2rem 0;
+        }
+
+        .included h3 {
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+
+        .included-items {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .included-item {
+            background: rgba(15, 23, 42, 0.5);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .included-item-icon {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .included-item h4 {
+            color: var(--accent);
+            font-size: 0.9rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .included-item p {
+            color: #94A3B8;
+            font-size: 0.8rem;
+        }
+
+        /* Right Side - Checkout */
+        .checkout-section {
+            background: rgba(30, 41, 59, 0.4);
+            border: 2px solid var(--accent);
+            border-radius: 12px;
+            padding: 3rem;
+            backdrop-filter: blur(10px);
+            height: fit-content;
+            position: sticky;
+            top: 100px;
+        }
+
+        .checkout-section h2 {
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .price-display {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding: 2rem;
+            background: rgba(184, 134, 11, 0.1);
+            border-radius: 8px;
+        }
+
+        .price-display .currency {
+            color: #94A3B8;
+            font-size: 1rem;
+        }
+
+        .price-display .amount {
+            font-size: 3rem;
+            color: var(--accent);
+            font-weight: bold;
+        }
+
+        .price-display .description {
+            color: #CBD5E1;
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        /* Form */
+        .checkout-form {
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            color: var(--text);
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 0.75rem;
+            background: rgba(15, 23, 42, 0.5);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text);
+            font-family: inherit;
+            font-size: 0.95rem;
+            transition: all 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--accent);
+            background: rgba(184, 134, 11, 0.05);
+        }
+
+        /* Buttons */
+        .btn {
+            width: 100%;
+            padding: 1rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: var(--primary);
+        }
+
+        .btn-primary:hover {
+            background: #D4AF37;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(184, 134, 11, 0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--accent);
+            border: 2px solid var(--accent);
+        }
+
+        .btn-secondary:hover {
+            background: var(--accent);
+            color: var(--primary);
+        }
+
+        /* Security Badge */
+        .security-badge {
+            text-align: center;
+            color: #94A3B8;
+            font-size: 0.85rem;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .security-badge p {
+            margin-bottom: 0.5rem;
+        }
+
+        /* FAQ */
+        .faq-section {
+            margin-top: 3rem;
+        }
+
+        .faq-section h3 {
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .faq-item {
+            background: rgba(30, 41, 59, 0.6);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .faq-item:hover {
+            border-color: var(--accent);
+            background: rgba(184, 134, 11, 0.05);
+        }
+
+        .faq-item h4 {
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .faq-item p {
+            color: #CBD5E1;
+            font-size: 0.9rem;
+            display: none;
+            margin-top: 1rem;
+        }
+
+        .faq-item.active p {
+            display: block;
+        }
+
+        /* Testimonials */
+        .testimonials {
+            margin-top: 3rem;
+        }
+
+        .testimonials h3 {
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .testimonial {
+            background: rgba(30, 41, 59, 0.6);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.5rem;
+        }
+
+        .testimonial-text {
+            color: #CBD5E1;
+            margin-bottom: 1rem;
+            font-style: italic;
+        }
+
+        .testimonial-author {
+            color: var(--accent);
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+
+            .checkout-section {
+                position: static;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .offer-section h1 {
+                font-size: 1.5rem;
+            }
+
+            .included-items {
+                grid-template-columns: 1fr;
+            }
+
+            nav a {
+                margin-left: 1rem;
+                font-size: 0.9rem;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.6s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="container">
+            <a href="index.html" class="logo">🜏 RootWise</a>
+            <div>
+                <a href="index.html">Home</a>
+                <a href="mythic-house.html">Mythic House</a>
+                <a href="sovereign-loop.html">Sovereign Loop</a>
+                <a href="tais-agents.html">TAIS Agents</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="main-content">
+            <!-- Left Side: Offer -->
+            <div class="offer-section fade-in">
+                <div class="offer-icon">📋</div>
+                <h1>RootWise Sovereign Report</h1>
+                <p>
+                    A personalized breakdown of your identity, direction, and income pathways. Built from your answers to three essential questions.
+                </p>
+
+                <div class="benefits">
+                    <h3>What You'll Receive</h3>
+                    <div class="benefit-item">Identity Analysis — Who you are becoming</div>
+                    <div class="benefit-item">Direction Mapping — Your sovereign path</div>
+                    <div class="benefit-item">Income Pathways — Revenue architecture for you</div>
+                    <div class="benefit-item">Next Steps — Actionable recommendations</div>
+                </div>
+
+                <div class="included">
+                    <h3>The Report Includes</h3>
+                    <div class="included-items">
+                        <div class="included-item">
+                            <div class="included-item-icon">💎</div>
+                            <h4>Identity Kernel</h4>
+                            <p>Your core self analysis</p>
+                        </div>
+                        <div class="included-item">
+                            <div class="included-item-icon">🗺️</div>
+                            <h4>Direction Map</h4>
+                            <p>Your sovereign path</p>
+                        </div>
+                        <div class="included-item">
+                            <div class="included-item-icon">💰</div>
+                            <h4>Income Design</h4>
+                            <p>Revenue architecture</p>
+                        </div>
+                        <div class="included-item">
+                            <div class="included-item-icon">🎯</div>
+                            <h4>Action Plan</h4>
+                            <p>Next steps to take</p>
+                        </div>
+                    </div>
+                </div>
+
+                <p style="margin-top: 2rem; color: #94A3B8; font-size: 0.9rem;">
+                    <strong>Delivery:</strong> Your report will be delivered within 7 business days of intake form submission. You'll receive email updates on progress.
+                </p>
+            </div>
+
+            <!-- Right Side: Checkout -->
+            <div class="checkout-section fade-in">
+                <h2>Get Your Report</h2>
+
+                <div class="price-display">
+                    <div class="currency">One-time investment</div>
+                    <div class="amount">$97</div>
+                    <div class="description">In your sovereignty</div>
+                </div>
+
+                <form class="checkout-form" onsubmit="handleCheckout(event)">
+                    <div class="form-group">
+                        <label for="name">Full Name *</label>
+                        <input type="text" id="name" name="name" required placeholder="Your name">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email Address *</label>
+                        <input type="email" id="email" name="email" required placeholder="your@email.com">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone">Phone (Optional)</label>
+                        <input type="tel" id="phone" name="phone" placeholder="Your phone number">
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Proceed to Payment</button>
+                </form>
+
+                <button class="btn btn-secondary" onclick="alert('Learn more about the Sovereign Report...')">Learn More</button>
+
+                <div class="security-badge">
+                    <p>🔒 Secure payment processing</p>
+                    <p>✓ Money-back guarantee (30 days)</p>
+                    <p>✓ Your data is protected</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- FAQ Section -->
+        <div class="faq-section fade-in">
+            <h3>Frequently Asked Questions</h3>
+            <div class="faq-item" onclick="toggleFAQ(this)">
+                <h4>What is the Sovereign Report? <span>+</span></h4>
+                <p>The Sovereign Report is a personalized analysis of your identity, direction, and income pathways. It's built from your answers to three essential questions and delivered as a comprehensive written breakdown with actionable next steps.</p>
+            </div>
+            <div class="faq-item" onclick="toggleFAQ(this)">
+                <h4>How long does it take to receive my report? <span>+</span></h4>
+                <p>Your report will be delivered within 7 business days of completing the intake form. You'll receive email updates on the progress of your report generation.</p>
+            </div>
+            <div class="faq-item" onclick="toggleFAQ(this)">
+                <h4>What if I'm not satisfied with my report? <span>+</span></h4>
+                <p>We offer a 30-day money-back guarantee. If you're not satisfied with your Sovereign Report, simply request a refund within 30 days and we'll return your full investment.</p>
+            </div>
+            <div class="faq-item" onclick="toggleFAQ(this)">
+                <h4>Can I update my report later? <span>+</span></h4>
+                <p>Yes. Your Sovereign Report is a living document. You can request updates as your identity evolves and your direction shifts. Updates are available at a reduced rate for existing customers.</p>
+            </div>
+            <div class="faq-item" onclick="toggleFAQ(this)">
+                <h4>What happens after I submit my intake form? <span>+</span></h4>
+                <p>After payment, you'll be redirected to the intake form where you'll answer three questions about your identity, direction, and sovereignty. Your answers will be used to generate your personalized report.</p>
+            </div>
+        </div>
+
+        <!-- Testimonials -->
+        <div class="testimonials fade-in">
+            <h3>What Others Are Saying</h3>
+            <div class="testimonial-grid">
+                <div class="testimonial">
+                    <div class="testimonial-text">
+                        "The Sovereign Report gave me clarity on who I'm becoming and how to build income aligned with my values. Worth every penny."
+                    </div>
+                    <div class="testimonial-author">— Sarah M.</div>
+                </div>
+                <div class="testimonial">
+                    <div class="testimonial-text">
+                        "I've taken the action steps from my report and already see results. This is not just analysis—it's a roadmap."
+                    </div>
+                    <div class="testimonial-author">— James K.</div>
+                </div>
+                <div class="testimonial">
+                    <div class="testimonial-text">
+                        "The report helped me see patterns I was blind to. Now I understand my direction and how to move forward with sovereignty."
+                    </div>
+                    <div class="testimonial-author">— Maria L.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function handleCheckout(event) {
+            event.preventDefault();
+            
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            
+            if (!name || !email) {
+                alert('Please fill in all required fields.');
+                return;
+            }
+
+            // Simulate checkout process
+            alert(`Processing payment for ${name}...\n\nIn a live environment, this would redirect to Stripe checkout.\n\nAfter payment, you'll complete the intake form to generate your Sovereign Report.`);
+            
+            // In a real implementation, this would redirect to Stripe checkout
+            // window.location.href = '/api/checkout?email=' + encodeURIComponent(email) + '&name=' + encodeURIComponent(name);
+        }
+
+        function toggleFAQ(element) {
+            element.classList.toggle('active');
+            const span = element.querySelector('span');
+            span.textContent = element.classList.contains('active') ? '−' : '+';
+        }
+
+        // Add fade-in animation to elements
+        document.querySelectorAll('.fade-in').forEach((el, index) => {
+            el.style.animationDelay = (index * 0.1) + 's';
+        });
+    </script>
+</body>
+</html>

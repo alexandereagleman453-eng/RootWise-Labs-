@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Services & Licensing - RootWise Sovereign OS</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #0F172A;
+            --accent: #B8860B;
+            --secondary: #1E293B;
+            --light: #F1F5F9;
+            --text: #E2E8F0;
+            --border: #334155;
+            --success: #10B981;
+            --warning: #F59E0B;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            background: linear-gradient(135deg, var(--primary) 0%, #1a1f3a 100%);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            z-index: 1000;
+            padding: 1rem 2rem;
+        }
+
+        nav .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        nav a {
+            color: var(--text);
+            text-decoration: none;
+            transition: color 0.3s;
+            margin-left: 2rem;
+        }
+
+        nav a:hover {
+            color: var(--accent);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Header */
+        .services-header {
+            padding-top: 100px;
+            padding-bottom: 3rem;
+            text-align: center;
+        }
+
+        .services-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--accent), var(--light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .services-header p {
+            color: #CBD5E1;
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Service Cards */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .service-card {
+            background: rgba(30, 41, 59, 0.4);
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            padding: 2rem;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s;
+        }
+
+        .service-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(184, 134, 11, 0.2);
+        }
+
+        .service-card h3 {
+            color: var(--accent);
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .service-card .price {
+            font-size: 2rem;
+            color: var(--accent);
+            font-weight: bold;
+            margin: 1rem 0;
+        }
+
+        .service-card p {
+            color: #CBD5E1;
+            margin-bottom: 1rem;
+        }
+
+        .service-card ul {
+            list-style: none;
+            margin: 1.5rem 0;
+        }
+
+        .service-card li {
+            padding: 0.5rem 0;
+            color: #CBD5E1;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .service-card li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--success);
+            font-weight: bold;
+        }
+
+        /* Buttons */
+        .btn {
+            width: 100%;
+            padding: 0.75rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 1rem;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: var(--primary);
+        }
+
+        .btn-primary:hover {
+            background: #D4AF37;
+            transform: translateY(-2px);
+        }
+
+        /* Process Section */
+        .process-section {
+            background: rgba(30, 41, 59, 0.4);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 3rem;
+            margin: 3rem 0;
+        }
+
+        .process-section h2 {
+            color: var(--accent);
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .process-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+
+        .process-step {
+            text-align: center;
+        }
+
+        .step-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            background: var(--accent);
+            color: var(--primary);
+            border-radius: 50%;
+            font-weight: bold;
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+        }
+
+        .process-step h4 {
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+
+        .process-step p {
+            color: #CBD5E1;
+            font-size: 0.9rem;
+        }
+
+        /* Features */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .feature-item {
+            background: rgba(15, 23, 42, 0.5);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.5rem;
+        }
+
+        .feature-item h4 {
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+
+        .feature-item p {
+            color: #CBD5E1;
+            font-size: 0.9rem;
+        }
+
+        /* FAQ */
+        .faq-section {
+            margin: 3rem 0;
+        }
+
+        .faq-section h2 {
+            color: var(--accent);
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .faq-item {
+            background: rgba(30, 41, 59, 0.6);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .faq-item:hover {
+            border-color: var(--accent);
+            background: rgba(184, 134, 11, 0.05);
+        }
+
+        .faq-item h4 {
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .faq-item p {
+            color: #CBD5E1;
+            font-size: 0.9rem;
+            display: none;
+            margin-top: 1rem;
+        }
+
+        .faq-item.active p {
+            display: block;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .services-header h1 {
+                font-size: 1.8rem;
+            }
+
+            nav a {
+                margin-left: 1rem;
+                font-size: 0.9rem;
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.6s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="container">
+            <a href="index.html" class="logo">🜏 RootWise</a>
+            <div>
+                <a href="index.html">Home</a>
+                <a href="pricing.html">Pricing</a>
+                <a href="services.html">Services</a>
+                <a href="codex.html">Codex</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <div class="services-header">
+        <div class="container">
+            <h1>RootWise Services</h1>
+            <p>High-ticket OS licensing, agent services, and sovereign system implementation.</p>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- OS Licensing Packages -->
+        <div style="margin: 3rem 0;">
+            <h2 style="color: var(--accent); text-align: center; margin-bottom: 2rem;">OS Licensing Packages</h2>
+            <div class="services-grid">
+                <!-- Starter Package -->
+                <div class="service-card fade-in">
+                    <h3>🌱 Starter</h3>
+                    <div class="price">$1,500</div>
+                    <p>Perfect for solo creators and coaches</p>
+                    <ul>
+                        <li>RootWise OS License (1 year)</li>
+                        <li>Chambers 1-12 (Season 1)</li>
+                        <li>Basic Lashay Integration</li>
+                        <li>Setup & Configuration</li>
+                        <li>Email Support</li>
+                        <li>Monthly Updates</li>
+                    </ul>
+                    <button class="btn btn-primary" onclick="alert('Schedule a consultation...')">Get Started</button>
+                </div>
+
+                <!-- Professional Package -->
+                <div class="service-card fade-in">
+                    <h3>⭐ Professional</h3>
+                    <div class="price">$5,000</div>
+                    <p>For established businesses and communities</p>
+                    <ul>
+                        <li>RootWise OS License (2 years)</li>
+                        <li>All 36 Chambers Unlocked</li>
+                        <li>Full TAIS Agent Integration</li>
+                        <li>Custom Setup & Training</li>
+                        <li>Priority Support</li>
+                        <li>Quarterly Strategy Sessions</li>
+                    </ul>
+                    <button class="btn btn-primary" onclick="alert('Schedule a consultation...')">Get Started</button>
+                </div>
+
+                <!-- Enterprise Package -->
+                <div class="service-card fade-in">
+                    <h3>👑 Enterprise</h3>
+                    <div class="price">$10,000+</div>
+                    <p>For organizations ready to scale</p>
+                    <ul>
+                        <li>RootWise OS License (3 years)</li>
+                        <li>Complete System Architecture</li>
+                        <li>White-Label Customization</li>
+                        <li>Dedicated Implementation Team</li>
+                        <li>24/7 Priority Support</li>
+                        <li>Custom Agent Development</li>
+                    </ul>
+                    <button class="btn btn-primary" onclick="alert('Schedule a consultation...')">Get Started</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Agent Services -->
+        <div style="margin: 3rem 0;">
+            <h2 style="color: var(--accent); text-align: center; margin-bottom: 2rem;">Agent Services</h2>
+            <div class="services-grid">
+                <!-- Oracle Consulting -->
+                <div class="service-card fade-in">
+                    <h3>🔮 Oracle Consulting</h3>
+                    <div class="price">$500/hr</div>
+                    <p>Strategic pattern analysis and foresight</p>
+                    <ul>
+                        <li>Pattern Recognition</li>
+                        <li>Trend Prediction</li>
+                        <li>Strategic Insight</li>
+                        <li>Mesh Analysis</li>
+                        <li>Custom Reports</li>
+                    </ul>
+                    <button class="btn btn-primary" onclick="alert('Book a session...')">Book Now</button>
+                </div>
+
+                <!-- Guardian Security -->
+                <div class="service-card fade-in">
+                    <h3>🛡️ Guardian Security</h3>
+                    <div class="price">$750/hr</div>
+                    <p>Boundary systems and security architecture</p>
+                    <ul>
+                        <li>Boundary Mapping</li>
+                        <li>Security Audit</li>
+                        <li>Protection Protocols</li>
+                        <li>HSASM Integration</li>
+                        <li>Ongoing Monitoring</li>
+                    </ul>
+                    <button class="btn btn-primary" onclick="alert('Book a session...')">Book Now</button>
+                </div>
+
+                <!-- Lashay Coaching -->
+                <div class="service-card fade-in">
+                    <h3>🦊 Lashay Coaching</h3>
+                    <div class="price">$600/hr</div>
+                    <p>Emotional intelligence and narrative branding</p>
+                    <ul>
+                        <li>Identity Coaching</li>
+                        <li>Narrative Development</li>
+                        <li>Emotional Intelligence</li>
+                        <li>Brand Storytelling</li>
+                        <li>Crisis Support</li>
+                    </ul>
+                    <button class="btn btn-primary" onclick="alert('Book a session...')">Book Now</button>
+                </div>
+
+                <!-- Leon Toolsmith -->
+                <div class="service-card fade-in">
+                    <h3>🔨 Leon Toolsmith</h3>
+                    <div class="price">$1,000/project</div>
+                    <p>Custom tool creation and workflow automation</p>
+                    <ul>
+                        <li>Tool Development</li>
+                        <li>Workflow Automation</li>
+                        <li>API Integration</li>
+                        <li>Custom Agents</li>
+                        <li>Deployment Support</li>
+                    </ul>
+                    <button class="btn btn-primary" onclick="alert('Request a quote...')">Request Quote</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Implementation Process -->
+        <div class="process-section fade-in">
+            <h2>Implementation Process</h2>
+            <div class="process-steps">
+                <div class="process-step">
+                    <div class="step-number">1</div>
+                    <h4>Discovery</h4>
+                    <p>Understand your vision and requirements</p>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">2</div>
+                    <h4>Design</h4>
+                    <p>Create custom architecture for your needs</p>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">3</div>
+                    <h4>Implementation</h4>
+                    <p>Build and integrate the RootWise OS</p>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">4</div>
+                    <h4>Training</h4>
+                    <p>Teach your team to operate the system</p>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">5</div>
+                    <h4>Launch</h4>
+                    <p>Go live with full support</p>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">6</div>
+                    <h4>Optimize</h4>
+                    <p>Continuous improvement and scaling</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- What's Included -->
+        <div style="margin: 3rem 0;">
+            <h2 style="color: var(--accent); text-align: center; margin-bottom: 2rem;">What's Included in All Services</h2>
+            <div class="features-grid">
+                <div class="feature-item">
+                    <h4>🏗️ Architecture</h4>
+                    <p>Complete RootWise OS architecture tailored to your needs</p>
+                </div>
+                <div class="feature-item">
+                    <h4>🧠 TAIS Agents</h4>
+                    <p>All 10 sovereign agents integrated and operational</p>
+                </div>
+                <div class="feature-item">
+                    <h4>🔐 Security</h4>
+                    <p>HSASM Watchtower and CDOME v2.0 governance</p>
+                </div>
+                <div class="feature-item">
+                    <h4>📚 Documentation</h4>
+                    <p>Complete Codex v1.0 and operational guides</p>
+                </div>
+                <div class="feature-item">
+                    <h4>🎓 Training</h4>
+                    <p>Team training and certification programs</p>
+                </div>
+                <div class="feature-item">
+                    <h4>🤝 Support</h4>
+                    <p>Ongoing support and optimization</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- FAQ -->
+        <div class="faq-section fade-in">
+            <h2>Frequently Asked Questions</h2>
+            <div class="faq-item" onclick="toggleFAQ(this)">
+                <h4>What's included in the OS license? <span>+</span></h4>
+                <p>The OS license includes the complete RootWise architecture (Lashay Protocol, TAIS agents, 36 Chambers, Sovereign Loop), implementation, training, and ongoing support. You get everything needed to operate RootWise as your primary system.</p>
+            </div>
+            <div class="faq-item" onclick="toggleFAQ(this)">
+                <h4>Can I customize the OS for my business? <span>+</span></h4>
+                <p>Yes. The Enterprise package includes white-label customization and custom agent development. We'll adapt the entire system to your specific needs and branding.</p>
+            </div>
+            <div class="faq-item" onclick="toggleFAQ(this)">
+                <h4>How long does implementation take? <span>+</span></h4>
+                <p>Starter: 2-4 weeks. Professional: 4-8 weeks. Enterprise: 8-16 weeks. Timeline depends on complexity and your team's availability.</p>
+            </div>
+            <div class="faq-item" onclick="toggleFAQ(this)">
+                <h4>What if I need additional support? <span>+</span></h4>
+                <p>All packages include ongoing support. You can upgrade to priority support, schedule additional consulting sessions, or request custom agent development as needed.</p>
+            </div>
+            <div class="faq-item" onclick="toggleFAQ(this)">
+                <h4>Do you offer payment plans? <span>+</span></h4>
+                <p>Yes. We offer flexible payment plans for all packages. Contact our sales team to discuss options that work for your budget.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleFAQ(element) {
+            element.classList.toggle('active');
+            const span = element.querySelector('span');
+            span.textContent = element.classList.contains('active') ? '−' : '+';
+        }
+
+        // Add fade-in animation to elements
+        document.querySelectorAll('.fade-in').forEach((el, index) => {
+            el.style.animationDelay = (index * 0.1) + 's';
+        });
+    </script>
+</body>
+</html>

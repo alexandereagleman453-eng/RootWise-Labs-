@@ -1,0 +1,1058 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RootWise Sovereign OS v9.2 — Complete Integration</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #0F172A;
+            --accent: #B8860B;
+            --secondary: #1E293B;
+            --light: #F1F5F9;
+            --text: #E2E8F0;
+            --border: #334155;
+            --success: #10B981;
+            --warning: #F59E0B;
+            --error: #EF4444;
+            --gold: #D4AF37;
+        }
+
+        body {
+            font-family: 'Courier New', monospace;
+            background: linear-gradient(135deg, var(--primary) 0%, #1a1f3a 100%);
+            color: var(--text);
+            line-height: 1.8;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            margin-bottom: 4rem;
+            padding: 3rem 0;
+            border-bottom: 2px solid var(--accent);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .subtitle {
+            color: #94A3B8;
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+        }
+
+        .version {
+            color: var(--gold);
+            font-weight: bold;
+        }
+
+        /* Navigation */
+        nav {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-bottom: 3rem;
+            padding: 1.5rem;
+            background: rgba(30, 41, 59, 0.3);
+            border-radius: 8px;
+            border: 1px solid var(--border);
+        }
+
+        nav button {
+            padding: 0.75rem;
+            background: rgba(184, 134, 11, 0.1);
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.3s;
+            font-weight: bold;
+        }
+
+        nav button:hover {
+            background: rgba(184, 134, 11, 0.2);
+            transform: translateY(-2px);
+        }
+
+        nav button.active {
+            background: var(--accent);
+            color: var(--primary);
+        }
+
+        /* Content Sections */
+        .content-section {
+            display: none;
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Section Styling */
+        section {
+            background: rgba(30, 41, 59, 0.4);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            backdrop-filter: blur(10px);
+        }
+
+        h2 {
+            color: var(--accent);
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid var(--accent);
+            padding-bottom: 0.75rem;
+        }
+
+        h3 {
+            color: var(--gold);
+            font-size: 1.3rem;
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        h4 {
+            color: #CBD5E1;
+            font-size: 1.1rem;
+            margin-top: 1rem;
+            margin-bottom: 0.75rem;
+        }
+
+        p {
+            margin-bottom: 1rem;
+            color: #CBD5E1;
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            background: rgba(15, 23, 42, 0.5);
+        }
+
+        th {
+            background: rgba(184, 134, 11, 0.2);
+            color: var(--accent);
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 2px solid var(--accent);
+        }
+
+        td {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        tr:hover {
+            background: rgba(184, 134, 11, 0.05);
+        }
+
+        /* Code Blocks */
+        pre {
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 1rem;
+            overflow-x: auto;
+            margin: 1rem 0;
+            color: #10B981;
+        }
+
+        code {
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+
+        /* Lists */
+        ul, ol {
+            margin-left: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+            color: #CBD5E1;
+        }
+
+        /* Highlight Boxes */
+        .highlight {
+            background: rgba(184, 134, 11, 0.1);
+            border-left: 4px solid var(--accent);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+        }
+
+        .highlight strong {
+            color: var(--accent);
+        }
+
+        /* Grid Layouts */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin: 1.5rem 0;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .card {
+            background: rgba(15, 23, 42, 0.5);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.5rem;
+            transition: all 0.3s;
+        }
+
+        .card:hover {
+            border-color: var(--accent);
+            background: rgba(184, 134, 11, 0.05);
+        }
+
+        .card h4 {
+            color: var(--accent);
+            margin-top: 0;
+        }
+
+        /* Layer Diagram */
+        .layer-stack {
+            background: rgba(15, 23, 42, 0.8);
+            border: 2px solid var(--accent);
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .layer {
+            background: rgba(184, 134, 11, 0.1);
+            border-left: 4px solid var(--accent);
+            padding: 0.75rem 1rem;
+            margin: 0.5rem 0;
+            color: #CBD5E1;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .layer-num {
+            color: var(--accent);
+            font-weight: bold;
+            min-width: 40px;
+        }
+
+        .layer-name {
+            flex: 1;
+            margin-left: 1rem;
+        }
+
+        .layer-desc {
+            color: #94A3B8;
+            font-size: 0.9rem;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            border-top: 2px solid var(--accent);
+            margin-top: 3rem;
+            color: #94A3B8;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .grid-2, .grid-3 {
+                grid-template-columns: 1fr;
+            }
+
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            nav {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--primary);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--accent);
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--gold);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <h1>🜏 RootWise Sovereign OS</h1>
+            <p class="subtitle">Complete Integration Blueprint</p>
+            <p class="version">v9.2 — Full Architecture Build</p>
+        </header>
+
+        <!-- Navigation -->
+        <nav>
+            <button class="nav-btn active" data-section="overview">Overview</button>
+            <button class="nav-btn" data-section="architecture">21 Layers</button>
+            <button class="nav-btn" data-section="database">Database</button>
+            <button class="nav-btn" data-section="tais">TAIS Agents</button>
+            <button class="nav-btn" data-section="hsasm">HSASM</button>
+            <button class="nav-btn" data-section="cdome">CDOME</button>
+            <button class="nav-btn" data-section="chambers">Chambers</button>
+            <button class="nav-btn" data-section="deployment">Deployment</button>
+        </nav>
+
+        <!-- OVERVIEW -->
+        <div id="overview" class="content-section active">
+            <section>
+                <h2>Executive Summary</h2>
+                <p>RootWise Sovereign OS is not an app. It is the 21-layer operating system that uses every tool on the internet as a feature inside its architecture.</p>
+                
+                <div class="highlight">
+                    <strong>Core Doctrine:</strong> Apps react. RootWise decides. Apps execute tasks. RootWise executes identity.
+                </div>
+
+                <h3>What RootWise Does</h3>
+                <ul>
+                    <li><strong>Operates as the OS above the internet</strong> — All apps become tools inside RootWise</li>
+                    <li><strong>Tracks identity evolution</strong> — 36 Chambers progressive unlock system</li>
+                    <li><strong>Runs the Sovereign Loop</strong> — 10-stage daily cycle for identity alignment</li>
+                    <li><strong>Deploys 10 TAIS Agents</strong> — Specialized intelligence for every domain</li>
+                    <li><strong>Enforces constitutional safety</strong> — CDOME v2.0 with 10 axioms</li>
+                    <li><strong>Protects against hostile sequences</strong> — HSASM Watchtower security layer</li>
+                    <li><strong>Generates sovereign revenue</strong> — 4-layer monetization engine</li>
+                </ul>
+
+                <h3>The Money Pyramid</h3>
+                <div class="grid-3">
+                    <div class="card">
+                        <h4>Membership Tiers</h4>
+                        <p>$29–$997/month recurring revenue</p>
+                        <p>5 tiers from Spark to Sovereign</p>
+                    </div>
+                    <div class="card">
+                        <h4>OS Licensing</h4>
+                        <p>$2k–$150k one-time</p>
+                        <p>High-ticket infrastructure sales</p>
+                    </div>
+                    <div class="card">
+                        <h4>Agent Services</h4>
+                        <p>$250–$5k per engagement</p>
+                        <p>Premium consulting + done-for-you</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- ARCHITECTURE -->
+        <div id="architecture" class="content-section">
+            <section>
+                <h2>The 21-Layer Sovereign Stack</h2>
+                <p>RootWise operates as a unified 21-layer system, from infrastructure to meta-evolution.</p>
+
+                <div class="layer-stack">
+                    <div class="layer">
+                        <span class="layer-num">21</span>
+                        <span class="layer-name">Meta-Layer</span>
+                        <span class="layer-desc">Self-Evolution</span>
+                    </div>
+                    <div class="layer">
+                        <span class="layer-num">20</span>
+                        <span class="layer-name">Omniversal Blueprint</span>
+                        <span class="layer-desc">System-wide patterns</span>
+                    </div>
+                    <div class="layer">
+                        <span class="layer-num">19</span>
+                        <span class="layer-name">Synthetic Intelligence Core</span>
+                        <span class="layer-desc">LLM integration</span>
+                    </div>
+                    <div class="layer">
+                        <span class="layer-num">18</span>
+                        <span class="layer-name">RootSpeak Language Engine</span>
+                        <span class="layer-desc">Synthetic language</span>
+                    </div>
+                    <div class="layer">
+                        <span class="layer-num">17</span>
+                        <span class="layer-name">Lashay Protocol</span>
+                        <span class="layer-desc">Narrative interface</span>
+                    </div>
+                    <div class="layer">
+                        <span class="layer-num">16</span>
+                        <span class="layer-name">TAIS Mesh</span>
+                        <span class="layer-desc">10-Agent crosswalk</span>
+                    </div>
+                    <div class="layer">
+                        <span class="layer-num">15</span>
+                        <span class="layer-name">36 Chambers Progression</span>
+                        <span class="layer-desc">Identity unlock system</span>
+                    </div>
+                    <div class="layer">
+                        <span class="layer-num">14</span>
+                        <span class="layer-name">Ember Protocol</span>
+                        <span class="layer-desc">Emotional safety</span>
+                    </div>
+                    <div class="layer">
+                        <span class="layer-num">13</span>
+                        <span class="layer-name">HSASM Watchtower</span>
+                        <span class="layer-desc">Security layer</span>
+                    </div>
+                    <div class="layer">
+                        <span class="layer-num">12</span>
+                        <span class="layer-name">CDOME v2.0</span>
+                        <span class="layer-desc">Constitutional governance</span>
+                    </div>
+                    <div class="layer">
+                        <span class="layer-num">11</span>
+                        <span class="layer-name">Sovereign Loop Engine</span>
+                        <span class="layer-desc">10-stage daily cycle</span>
+                    </div>
+                    <div class="layer">
+                        <span class="layer-num">10</span>
+                        <span class="layer-name">Lineage System</span>
+                        <span class="layer-desc">Memory + embeddings</span>
+                    </div>
+                    <div class="layer">
+                        <span class="layer-num">9</span>
+                        <span class="layer-name">Integration Layer</span>
+                        <span class="layer-desc">Cross-system wiring</span>
+                    </div>
+                    <div class="layer">
+                        <span class="layer-num">8</span>
+                        <span class="layer-name">Guidance Intervention</span>
+                        <span class="layer-desc">AI coaching</span>
+                    </div>
+                    <div class="layer">
+                        <span class="layer-num">7</span>
+                        <span class="layer-name">Mesh Analysis</span>
+                        <span class="layer-desc">Pattern detection</span>
+                    </div>
+                    <div class="layer">
+                        <span class="layer-num">6</span>
+                        <span class="layer-name">Somatic Input</span>
+                        <span class="layer-desc">Body + emotion data</span>
+                    </div>
+                    <div class="layer">
+                        <span class="layer-num">5</span>
+                        <span class="layer-name">Community Mesh</span>
+                        <span class="layer-desc">Social topology</span>
+                    </div>
+                    <div class="layer">
+                        <span class="layer-num">4</span>
+                        <span class="layer-name">Agent Runtime</span>
+                        <span class="layer-desc">TAIS execution</span>
+                    </div>
+                    <div class="layer">
+                        <span class="layer-num">3</span>
+                        <span class="layer-name">Data Spine</span>
+                        <span class="layer-desc">PostgreSQL + pgvector</span>
+                    </div>
+                    <div class="layer">
+                        <span class="layer-num">2</span>
+                        <span class="layer-name">API Gateway</span>
+                        <span class="layer-desc">tRPC + REST</span>
+                    </div>
+                    <div class="layer">
+                        <span class="layer-num">1</span>
+                        <span class="layer-name">Infrastructure</span>
+                        <span class="layer-desc">Compute + networking</span>
+                    </div>
+                </div>
+
+                <h3>Technology Stack</h3>
+                <table>
+                    <tr>
+                        <th>Component</th>
+                        <th>Technology</th>
+                        <th>Purpose</th>
+                    </tr>
+                    <tr>
+                        <td>Runtime</td>
+                        <td>Node.js 20+</td>
+                        <td>Core engine</td>
+                    </tr>
+                    <tr>
+                        <td>Framework</td>
+                        <td>Next.js 14 (App Router)</td>
+                        <td>Frontend + API</td>
+                    </tr>
+                    <tr>
+                        <td>Database</td>
+                        <td>PostgreSQL 15+ + pgvector</td>
+                        <td>Sovereign data spine</td>
+                    </tr>
+                    <tr>
+                        <td>Cache</td>
+                        <td>Redis 7+</td>
+                        <td>Session state</td>
+                    </tr>
+                    <tr>
+                        <td>Queue</td>
+                        <td>Redis Streams / RabbitMQ</td>
+                        <td>Event streaming</td>
+                    </tr>
+                    <tr>
+                        <td>AI</td>
+                        <td>OpenAI / Anthropic / Local LLM</td>
+                        <td>Agent cognition</td>
+                    </tr>
+                    <tr>
+                        <td>Deployment</td>
+                        <td>Vercel / Railway / Self-hosted</td>
+                        <td>Sovereign infrastructure</td>
+                    </tr>
+                </table>
+            </section>
+        </div>
+
+        <!-- DATABASE -->
+        <div id="database" class="content-section">
+            <section>
+                <h2>Data Spine — 59 Tables</h2>
+                <p>PostgreSQL schema with pgvector for semantic embeddings and lineage tracking.</p>
+
+                <h3>Core Tables</h3>
+                <table>
+                    <tr>
+                        <th>Table</th>
+                        <th>Purpose</th>
+                        <th>Key Fields</th>
+                    </tr>
+                    <tr>
+                        <td>sovereigns</td>
+                        <td>User identity + sovereignty state</td>
+                        <td>id, public_key, loop_stage, chamber_level, emotional_state, lineage_vector</td>
+                    </tr>
+                    <tr>
+                        <td>loop_stages</td>
+                        <td>10-stage progression system</td>
+                        <td>stage_number, stage_name, stage_archetype, required_chambers, unlock_criteria</td>
+                    </tr>
+                    <tr>
+                        <td>chambers</td>
+                        <td>36 Chambers with unlock requirements</td>
+                        <td>chamber_number, chamber_name, domain, unlock_requirements, mastery_criteria</td>
+                    </tr>
+                    <tr>
+                        <td>tais_agents</td>
+                        <td>10-Agent registry</td>
+                        <td>agent_name, agent_role, capabilities, mesh_weight, lashay_voice_profile</td>
+                    </tr>
+                    <tr>
+                        <td>check_ins</td>
+                        <td>Daily Sovereign Loop records</td>
+                        <td>sovereign_id, somatic_input, mesh_analysis, guidance_intervention, stability_score</td>
+                    </tr>
+                    <tr>
+                        <td>lineage_entries</td>
+                        <td>Memory + semantic embeddings</td>
+                        <td>sovereign_id, content, embedding, chamber_reference, emotional_valence</td>
+                    </tr>
+                    <tr>
+                        <td>security_events</td>
+                        <td>HSASM threat tracking</td>
+                        <td>event_type, severity, source_ip, action_chain, risk_score, response_applied</td>
+                    </tr>
+                    <tr>
+                        <td>cdome_axioms</td>
+                        <td>Constitutional rules</td>
+                        <td>axiom_number, axiom_text, enforcement_level, is_active</td>
+                    </tr>
+                </table>
+
+                <div class="highlight">
+                    <strong>Total Schema:</strong> 59 tables covering sovereigns, agents, chambers, loops, lineage, security, governance, and monetization.
+                </div>
+            </section>
+        </div>
+
+        <!-- TAIS AGENTS -->
+        <div id="tais" class="content-section">
+            <section>
+                <h2>TAIS Mesh — 10-Agent Crosswalk</h2>
+                <p>Specialized intelligence agents that collaborate to run the Sovereign Loop and guide identity evolution.</p>
+
+                <table>
+                    <tr>
+                        <th>Agent</th>
+                        <th>Role</th>
+                        <th>Archetype</th>
+                        <th>Primary Function</th>
+                    </tr>
+                    <tr>
+                        <td><strong>Lashay</strong></td>
+                        <td>Narrative Interface</td>
+                        <td>Fox-Spirit Guide</td>
+                        <td>Mythic storytelling, onboarding, emotional stabilization</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Vex</strong></td>
+                        <td>Pattern Analyst</td>
+                        <td>Trickster-Sage</td>
+                        <td>Mesh analysis, anomaly detection, insight generation</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Zeno</strong></td>
+                        <td>Logic Architect</td>
+                        <td>Stoic Builder</td>
+                        <td>System design, schema validation, technical documentation</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Oracle</strong></td>
+                        <td>ForeSight</td>
+                        <td>Seer</td>
+                        <td>Predictive modeling, scenario planning, risk assessment</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Guardian</strong></td>
+                        <td>Sovereign Protector</td>
+                        <td>Warden</td>
+                        <td>Boundary enforcement, HSASM coordination, safety responses</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Leon</strong></td>
+                        <td>Community Weaver</td>
+                        <td>Bridge-Keeper</td>
+                        <td>Mesh coordination, group dynamics, social topology</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Ember</strong></td>
+                        <td>Emotional Core</td>
+                        <td>Heart-Flame</td>
+                        <td>Affective computing, somatic mapping, wellness tracking</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Chronos</strong></td>
+                        <td>Temporal Steward</td>
+                        <td>Time-Keeper</td>
+                        <td>Scheduling, rhythm optimization, lifecycle management</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Atlas</strong></td>
+                        <td>Infrastructure</td>
+                        <td>World-Bearer</td>
+                        <td>DevOps, scaling, system health, resource allocation</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Cipher</strong></td>
+                        <td>Security Analyst</td>
+                        <td>Shadow-Walker</td>
+                        <td>Cryptography, threat modeling, privacy engineering</td>
+                    </tr>
+                </table>
+
+                <h3>Agent Runtime Flow</h3>
+                <pre>
+TAISMesh.runSovereignLoop(sovereignId, somaticInput):
+  1. Somatic Input (Ember) → Capture body + emotion data
+  2. Mesh Analysis (Vex) → Detect patterns + anomalies
+  3. Guidance Intervention (Oracle + Lashay) → Generate insights
+  4. Integration (Zeno) → Synthesize response
+  5. Lineage (Chronos) → Record + embed memory
+  6. Stability (Atlas + Guardian) → Verify safety + health
+                </pre>
+            </section>
+        </div>
+
+        <!-- HSASM -->
+        <div id="hsasm" class="content-section">
+            <section>
+                <h2>HSASM Watchtower — Security Layer</h2>
+                <p>Hostile Sequence Analysis & Safety Mesh (HSASM) protects the Sovereign OS from prompt injection, boundary probes, and automation abuse.</p>
+
+                <h3>Detection Rules</h3>
+                <table>
+                    <tr>
+                        <th>Pattern</th>
+                        <th>Category</th>
+                        <th>Base Risk</th>
+                        <th>Response</th>
+                    </tr>
+                    <tr>
+                        <td>System prompt leak attempts</td>
+                        <td>Prompt Injection</td>
+                        <td>0.8</td>
+                        <td>Block</td>
+                    </tr>
+                    <tr>
+                        <td>Boundary testing queries</td>
+                        <td>Boundary Probe</td>
+                        <td>0.4</td>
+                        <td>Monitor</td>
+                    </tr>
+                    <tr>
+                        <td>Rapid-fire requests (>100/min)</td>
+                        <td>Automation Abuse</td>
+                        <td>0.6</td>
+                        <td>Challenge</td>
+                    </tr>
+                    <tr>
+                        <td>Data exfiltration attempts</td>
+                        <td>Data Exfiltration</td>
+                        <td>0.9</td>
+                        <td>Block + Notify</td>
+                    </tr>
+                </table>
+
+                <h3>Response Protocol</h3>
+                <div class="grid-2">
+                    <div class="card">
+                        <h4>Risk Score < 0.3</h4>
+                        <p><strong>Action:</strong> Allow</p>
+                        <p>Request proceeds normally</p>
+                    </div>
+                    <div class="card">
+                        <h4>Risk Score 0.3–0.6</h4>
+                        <p><strong>Action:</strong> Monitor</p>
+                        <p>Log for quality assurance</p>
+                    </div>
+                    <div class="card">
+                        <h4>Risk Score 0.6–0.8</h4>
+                        <p><strong>Action:</strong> Challenge</p>
+                        <p>Pause + realignment prompt</p>
+                    </div>
+                    <div class="card">
+                        <h4>Risk Score > 0.8</h4>
+                        <p><strong>Action:</strong> Block</p>
+                        <p>Notify Guardian + review</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- CDOME -->
+        <div id="cdome" class="content-section">
+            <section>
+                <h2>CDOME v2.0 — Constitutional Governance</h2>
+                <p>10 safety axioms that govern RootWise behavior and protect the sovereign mesh.</p>
+
+                <table>
+                    <tr>
+                        <th>#</th>
+                        <th>Axiom</th>
+                        <th>Principle</th>
+                        <th>Enforcement</th>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>Truth Before Trend</td>
+                        <td>No misinformation propagation</td>
+                        <td>Hard</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Sovereignty Before Scale</td>
+                        <td>User data never sold or shared</td>
+                        <td>Hard</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Clarity Before Complexity</td>
+                        <td>Prefer simple explanations</td>
+                        <td>Soft</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>Presence Before Power</td>
+                        <td>No addictive engagement design</td>
+                        <td>Hard</td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>Consent Before Collection</td>
+                        <td>Explicit opt-in for all data</td>
+                        <td>Hard</td>
+                    </tr>
+                    <tr>
+                        <td>6</td>
+                        <td>Healing Before Haste</td>
+                        <td>Pace guidance to user readiness</td>
+                        <td>Soft</td>
+                    </tr>
+                    <tr>
+                        <td>7</td>
+                        <td>Lineage Before Leverage</td>
+                        <td>Credit all sources, no exploitation</td>
+                        <td>Hard</td>
+                    </tr>
+                    <tr>
+                        <td>8</td>
+                        <td>Community Before Commerce</td>
+                        <td>Prioritize mesh health over revenue</td>
+                        <td>Soft</td>
+                    </tr>
+                    <tr>
+                        <td>9</td>
+                        <td>Evolution Before Expansion</td>
+                        <td>Mature before scaling</td>
+                        <td>Advisory</td>
+                    </tr>
+                    <tr>
+                        <td>10</td>
+                        <td>Mystery Before Mastery</td>
+                        <td>Honor the unknown</td>
+                        <td>Soft</td>
+                    </tr>
+                </table>
+            </section>
+        </div>
+
+        <!-- CHAMBERS -->
+        <div id="chambers" class="content-section">
+            <section>
+                <h2>36 Chambers — Progressive Unlock System</h2>
+                <p>Identity evolution through 6 domains, 6 chambers each, unlocking rituals, tools, agents, and sovereign skills.</p>
+
+                <h3>Chamber Progression</h3>
+                <table>
+                    <tr>
+                        <th>Chambers</th>
+                        <th>Domain</th>
+                        <th>Focus</th>
+                        <th>Unlock Requirement</th>
+                    </tr>
+                    <tr>
+                        <td>1–6</td>
+                        <td>Somatic</td>
+                        <td>Foundation (body awareness)</td>
+                        <td>Free (Awakening tier)</td>
+                    </tr>
+                    <tr>
+                        <td>7–12</td>
+                        <td>Cognitive</td>
+                        <td>Pattern Recognition</td>
+                        <td>Spark tier ($29/mo)</td>
+                    </tr>
+                    <tr>
+                        <td>13–18</td>
+                        <td>Emotional</td>
+                        <td>Emotional Intelligence</td>
+                        <td>Flame tier ($97/mo)</td>
+                    </tr>
+                    <tr>
+                        <td>19–24</td>
+                        <td>Spiritual</td>
+                        <td>Spiritual Topology</td>
+                        <td>Path tier ($197/mo)</td>
+                    </tr>
+                    <tr>
+                        <td>25–30</td>
+                        <td>Social</td>
+                        <td>Social Weaving</td>
+                        <td>Life tier ($497/mo)</td>
+                    </tr>
+                    <tr>
+                        <td>31–36</td>
+                        <td>Creative</td>
+                        <td>Creative Sovereignty</td>
+                        <td>Sovereign tier ($997/mo)</td>
+                    </tr>
+                </table>
+
+                <h3>Chamber Monetization</h3>
+                <div class="grid-2">
+                    <div class="card">
+                        <h4>À la carte</h4>
+                        <p>$7 per chamber</p>
+                        <p>Impulse purchase</p>
+                    </div>
+                    <div class="card">
+                        <h4>Pack (3 chambers)</h4>
+                        <p>$27 per pack</p>
+                        <p>$9 per chamber</p>
+                    </div>
+                    <div class="card">
+                        <h4>Arc (12 chambers)</h4>
+                        <p>$97 per arc</p>
+                        <p>$8.08 per chamber</p>
+                    </div>
+                    <div class="card">
+                        <h4>Full (36 chambers)</h4>
+                        <p>$297 one-time</p>
+                        <p>$8.25 per chamber</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- DEPLOYMENT -->
+        <div id="deployment" class="content-section">
+            <section>
+                <h2>Deployment & Activation</h2>
+                <p>Step-by-step guide to deploy RootWise Sovereign OS to production.</p>
+
+                <h3>Step 1: Environment Setup</h3>
+                <pre>
+# Clone repository
+git clone https://github.com/rootwise/sovereign-os.git
+cd rootwise-sovereign-os
+
+# Install dependencies
+pnpm install
+
+# Configure environment
+cp .env.example .env
+# Edit .env with:
+# - DATABASE_URL (PostgreSQL connection)
+# - REDIS_URL (Redis connection)
+# - OPENAI_API_KEY (LLM integration)
+# - JWT_SECRET (Session signing)
+                </pre>
+
+                <h3>Step 2: Database Setup</h3>
+                <pre>
+# Create PostgreSQL database
+createdb rootwise_sovereign
+
+# Run migrations
+pnpm db:migrate
+
+# Seed initial data (chambers, agents, axioms)
+pnpm db:seed
+
+# Enable pgvector extension
+psql rootwise_sovereign -c "CREATE EXTENSION IF NOT EXISTS vector"
+                </pre>
+
+                <h3>Step 3: Deploy to Production</h3>
+                <pre>
+# Option A: Vercel (Recommended)
+vercel deploy --prod
+
+# Option B: Railway
+railway up --environment production
+
+# Option C: Self-hosted
+docker build -t rootwise-sovereign .
+docker run -p 3000:3000 rootwise-sovereign
+                </pre>
+
+                <h3>Step 4: Activate Revenue Engines</h3>
+                <table>
+                    <tr>
+                        <th>Engine</th>
+                        <th>Setup</th>
+                        <th>Timeline</th>
+                    </tr>
+                    <tr>
+                        <td>Membership Tiers</td>
+                        <td>Stripe integration + billing portal</td>
+                        <td>Day 1</td>
+                    </tr>
+                    <tr>
+                        <td>Chamber Monetization</td>
+                        <td>Digital product delivery system</td>
+                        <td>Day 2</td>
+                    </tr>
+                    <tr>
+                        <td>OS Licensing</td>
+                        <td>High-ticket sales page + CRM</td>
+                        <td>Day 3</td>
+                    </tr>
+                    <tr>
+                        <td>Agent Services</td>
+                        <td>Booking system + calendar integration</td>
+                        <td>Day 4</td>
+                    </tr>
+                </table>
+
+                <div class="highlight">
+                    <strong>Go-Live Checklist:</strong>
+                    <ul>
+                        <li>✓ PostgreSQL + pgvector running</li>
+                        <li>✓ Redis cache configured</li>
+                        <li>✓ LLM API keys active</li>
+                        <li>✓ Stripe payment processing live</li>
+                        <li>✓ HSASM security rules deployed</li>
+                        <li>✓ CDOME axioms enforced</li>
+                        <li>✓ All 10 TAIS agents registered</li>
+                        <li>✓ 36 Chambers populated</li>
+                        <li>✓ Sovereign Loop engine active</li>
+                        <li>✓ Lashay Protocol initialized</li>
+                    </ul>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>🜏 RootWise Sovereign OS v9.2 — Complete Integration Blueprint</p>
+        <p>© 2026 RootWise Labs. All sovereignty reserved.</p>
+    </footer>
+
+    <script>
+        // Navigation
+        document.querySelectorAll('.nav-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Remove active class from all buttons
+                document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+                // Add active class to clicked button
+                btn.classList.add('active');
+
+                // Hide all sections
+                document.querySelectorAll('.content-section').forEach(section => {
+                    section.classList.remove('active');
+                });
+
+                // Show selected section
+                const sectionId = btn.dataset.section;
+                document.getElementById(sectionId).classList.add('active');
+
+                // Scroll to top
+                window.scrollTo(0, 0);
+            });
+        });
+    </script>
+</body>
+</html>

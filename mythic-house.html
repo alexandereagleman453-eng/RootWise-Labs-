@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Mythic House - RootWise Sovereign OS</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #0F172A;
+            --accent: #B8860B;
+            --secondary: #1E293B;
+            --light: #F1F5F9;
+            --text: #E2E8F0;
+            --border: #334155;
+            --success: #10B981;
+            --warning: #F59E0B;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            background: linear-gradient(135deg, var(--primary) 0%, #1a1f3a 100%);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            z-index: 1000;
+            padding: 1rem 2rem;
+        }
+
+        nav .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        nav a {
+            color: var(--text);
+            text-decoration: none;
+            transition: color 0.3s;
+            margin-left: 2rem;
+        }
+
+        nav a:hover {
+            color: var(--accent);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Header */
+        .header {
+            padding-top: 100px;
+            padding-bottom: 3rem;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--accent), var(--light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header p {
+            color: #CBD5E1;
+            font-size: 1.1rem;
+        }
+
+        /* Main Content */
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 3fr;
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            background: rgba(30, 41, 59, 0.6);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2rem;
+            height: fit-content;
+            position: sticky;
+            top: 100px;
+            backdrop-filter: blur(10px);
+        }
+
+        .sidebar h3 {
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+        }
+
+        .sidebar-section {
+            margin-bottom: 2rem;
+        }
+
+        .sidebar-section h4 {
+            color: var(--text);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 1rem;
+            color: #94A3B8;
+        }
+
+        .sidebar-item {
+            padding: 0.75rem;
+            margin-bottom: 0.5rem;
+            background: rgba(15, 23, 42, 0.5);
+            border-left: 3px solid transparent;
+            cursor: pointer;
+            transition: all 0.3s;
+            border-radius: 4px;
+        }
+
+        .sidebar-item:hover {
+            background: rgba(184, 134, 11, 0.1);
+            border-left-color: var(--accent);
+        }
+
+        .sidebar-item.active {
+            background: rgba(184, 134, 11, 0.15);
+            border-left-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .progress-bar {
+            background: rgba(15, 23, 42, 0.5);
+            height: 8px;
+            border-radius: 4px;
+            margin-top: 1rem;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, var(--accent), #D4AF37);
+            height: 100%;
+            width: 30%;
+            transition: width 0.3s;
+        }
+
+        .progress-text {
+            font-size: 0.85rem;
+            color: #94A3B8;
+            margin-top: 0.5rem;
+        }
+
+        /* Main Area */
+        .house-view {
+            background: rgba(30, 41, 59, 0.4);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 3rem;
+            backdrop-filter: blur(10px);
+            min-height: 600px;
+        }
+
+        .house-visual {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .room {
+            background: rgba(30, 41, 59, 0.6);
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .room::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(184, 134, 11, 0.1), transparent);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .room:hover {
+            border-color: var(--accent);
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(184, 134, 11, 0.2);
+        }
+
+        .room:hover::before {
+            opacity: 1;
+        }
+
+        .room.locked {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .room.locked:hover {
+            border-color: var(--border);
+            transform: none;
+            box-shadow: none;
+        }
+
+        .room-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .room h3 {
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .room p {
+            color: #CBD5E1;
+            font-size: 0.9rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .room-lock {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 1.2rem;
+        }
+
+        .room-progress {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            font-size: 0.8rem;
+            color: #94A3B8;
+        }
+
+        /* Chamber Detail */
+        .chamber-detail {
+            background: rgba(30, 41, 59, 0.6);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+
+        .chamber-detail h2 {
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+
+        .chamber-detail p {
+            color: #CBD5E1;
+            margin-bottom: 1rem;
+            line-height: 1.8;
+        }
+
+        .chamber-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .stat-card {
+            background: rgba(15, 23, 42, 0.5);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 1.8rem;
+            color: var(--accent);
+            font-weight: bold;
+        }
+
+        .stat-label {
+            color: #94A3B8;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+
+        /* Rituals */
+        .rituals {
+            margin-top: 2rem;
+        }
+
+        .rituals h3 {
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+
+        .ritual-list {
+            list-style: none;
+        }
+
+        .ritual-item {
+            background: rgba(15, 23, 42, 0.5);
+            border-left: 3px solid var(--accent);
+            padding: 1rem;
+            margin-bottom: 0.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .ritual-item:hover {
+            background: rgba(184, 134, 11, 0.1);
+            transform: translateX(5px);
+        }
+
+        .ritual-item h4 {
+            color: var(--text);
+            margin-bottom: 0.3rem;
+        }
+
+        .ritual-item p {
+            color: #94A3B8;
+            font-size: 0.9rem;
+        }
+
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: var(--primary);
+        }
+
+        .btn-primary:hover {
+            background: #D4AF37;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--accent);
+            border: 2px solid var(--accent);
+        }
+
+        .btn-secondary:hover {
+            background: var(--accent);
+            color: var(--primary);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                position: static;
+            }
+
+            .house-visual {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8rem;
+            }
+
+            .house-visual {
+                grid-template-columns: 1fr;
+            }
+
+            nav ul {
+                display: none;
+            }
+
+            .sidebar {
+                display: none;
+            }
+
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: var(--secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2rem;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-header h2 {
+            color: var(--accent);
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            color: var(--text);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .close-btn:hover {
+            color: var(--accent);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="container">
+            <a href="index.html" class="logo">🜏 RootWise</a>
+            <div>
+                <a href="index.html">Home</a>
+                <a href="mythic-house.html">Mythic House</a>
+                <a href="#">Sovereign Loop</a>
+                <a href="#">Codex</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <div class="header">
+        <div class="container">
+            <h1>The Mythic House</h1>
+            <p>Your personal OS architecture made visible. Each room is a chamber of sovereignty.</p>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="main-content">
+            <!-- Sidebar -->
+            <div class="sidebar">
+                <h3>Your Journey</h3>
+                
+                <div class="sidebar-section">
+                    <h4>Unlocked Chambers</h4>
+                    <div class="sidebar-item active" onclick="selectChamber(1)">Chamber 1: Identity Kernel</div>
+                    <div class="sidebar-item" onclick="selectChamber(2)">Chamber 2: Sovereign Loop</div>
+                    <div class="sidebar-item" onclick="selectChamber(3)">Chamber 3: Emotional Mastery</div>
+                    <div class="sidebar-item" onclick="selectChamber(4)">Chamber 4: Physical Presence</div>
+                    <div class="sidebar-item" onclick="selectChamber(5)">Chamber 5: Mental Clarity</div>
+                    <div class="sidebar-item" onclick="selectChamber(6)">Chamber 6: Creative Expression</div>
+                </div>
+
+                <div class="sidebar-section">
+                    <h4>Locked Chambers</h4>
+                    <div class="sidebar-item" style="opacity: 0.5; cursor: not-allowed;">Chamber 7: Relational Wisdom 🔒</div>
+                    <div class="sidebar-item" style="opacity: 0.5; cursor: not-allowed;">Chamber 8: Economic Engine 🔒</div>
+                    <div class="sidebar-item" style="opacity: 0.5; cursor: not-allowed;">Chamber 9: Spiritual Sovereignty 🔒</div>
+                </div>
+
+                <div class="sidebar-section">
+                    <h4>Progress</h4>
+                    <div class="progress-bar">
+                        <div class="progress-fill"></div>
+                    </div>
+                    <div class="progress-text">6 of 36 chambers unlocked</div>
+                </div>
+            </div>
+
+            <!-- Main House View -->
+            <div class="house-view">
+                <h2 style="color: var(--accent); margin-bottom: 2rem;">The Porch</h2>
+                
+                <!-- House Rooms -->
+                <div class="house-visual">
+                    <!-- Chamber 1 -->
+                    <div class="room fade-in" onclick="selectChamber(1)">
+                        <div class="room-icon">💎</div>
+                        <h3>Identity Kernel</h3>
+                        <p>Your core self</p>
+                        <div class="room-progress">100%</div>
+                    </div>
+
+                    <!-- Chamber 2 -->
+                    <div class="room fade-in" onclick="selectChamber(2)">
+                        <div class="room-icon">🔄</div>
+                        <h3>Sovereign Loop</h3>
+                        <p>The 9-step cycle</p>
+                        <div class="room-progress">85%</div>
+                    </div>
+
+                    <!-- Chamber 3 -->
+                    <div class="room fade-in" onclick="selectChamber(3)">
+                        <div class="room-icon">❤️</div>
+                        <h3>Emotional Mastery</h3>
+                        <p>Feeling with wisdom</p>
+                        <div class="room-progress">60%</div>
+                    </div>
+
+                    <!-- Chamber 4 -->
+                    <div class="room fade-in" onclick="selectChamber(4)">
+                        <div class="room-icon">🧘</div>
+                        <h3>Physical Presence</h3>
+                        <p>Body as anchor</p>
+                        <div class="room-progress">70%</div>
+                    </div>
+
+                    <!-- Chamber 5 -->
+                    <div class="room fade-in" onclick="selectChamber(5)">
+                        <div class="room-icon">🧠</div>
+                        <h3>Mental Clarity</h3>
+                        <p>Thoughts as tools</p>
+                        <div class="room-progress">75%</div>
+                    </div>
+
+                    <!-- Chamber 6 -->
+                    <div class="room fade-in" onclick="selectChamber(6)">
+                        <div class="room-icon">🎨</div>
+                        <h3>Creative Expression</h3>
+                        <p>Making what's true</p>
+                        <div class="room-progress">50%</div>
+                    </div>
+
+                    <!-- Locked Chambers -->
+                    <div class="room locked fade-in">
+                        <div class="room-icon">👥</div>
+                        <h3>Relational Wisdom</h3>
+                        <p>Unlock at Chamber 7</p>
+                        <div class="room-lock">🔒</div>
+                    </div>
+
+                    <div class="room locked fade-in">
+                        <div class="room-icon">💰</div>
+                        <h3>Economic Engine</h3>
+                        <p>Unlock at Chamber 8</p>
+                        <div class="room-lock">🔒</div>
+                    </div>
+
+                    <div class="room locked fade-in">
+                        <div class="room-icon">✨</div>
+                        <h3>Spiritual Sovereignty</h3>
+                        <p>Unlock at Chamber 9</p>
+                        <div class="room-lock">🔒</div>
+                    </div>
+                </div>
+
+                <!-- Chamber Detail -->
+                <div class="chamber-detail" id="chamberDetail">
+                    <h2>Chamber 1: Identity Kernel</h2>
+                    <p>
+                        The core of your being. This is the chamber where you remember who you are becoming. Not who you were. Not who others say you should be. But who you are choosing to become through every decision, every ritual, every moment of presence.
+                    </p>
+                    <p>
+                        The Identity Kernel is the foundation of all other chambers. Every other chamber serves this one. Every agent in the TAIS Mesh protects this one. Every ritual you perform refines this one.
+                    </p>
+
+                    <div class="chamber-stats">
+                        <div class="stat-card">
+                            <div class="stat-value">100%</div>
+                            <div class="stat-label">Completion</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value">42</div>
+                            <div class="stat-label">Rituals Completed</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value">156</div>
+                            <div class="stat-label">Days Consistent</div>
+                        </div>
+                    </div>
+
+                    <div class="rituals">
+                        <h3>Daily Rituals</h3>
+                        <ul class="ritual-list">
+                            <li class="ritual-item" onclick="openModal('ritual1')">
+                                <h4>🌅 Morning Stillness</h4>
+                                <p>5 minutes of presence before action. Hand over heart. "I am still here."</p>
+                            </li>
+                            <li class="ritual-item" onclick="openModal('ritual2')">
+                                <h4>📝 Truth Journal</h4>
+                                <p>Write one truth you discovered today. One way you chose sovereignty.</p>
+                            </li>
+                            <li class="ritual-item" onclick="openModal('ritual3')">
+                                <h4>🌙 Evening Integration</h4>
+                                <p>Reflect on the day. What did your choices teach you about who you are?</p>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button class="btn btn-primary" onclick="alert('Starting Chamber 1 ritual...')">Begin Today's Ritual</button>
+                        <button class="btn btn-secondary" onclick="alert('Opening Chamber 1 documentation...')">View Full Guide</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div id="ritualModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">Ritual</h2>
+                <button class="close-btn" onclick="closeModal()">×</button>
+            </div>
+            <div id="modalBody"></div>
+        </div>
+    </div>
+
+    <script>
+        const chambers = {
+            1: {
+                title: "Chamber 1: Identity Kernel",
+                description: "The core of your being. This is the chamber where you remember who you are becoming.",
+                icon: "💎",
+                completion: 100,
+                rituals: 42,
+                days: 156,
+                rituals_list: [
+                    { title: "🌅 Morning Stillness", desc: "5 minutes of presence before action. Hand over heart. 'I am still here.'" },
+                    { title: "📝 Truth Journal", desc: "Write one truth you discovered today. One way you chose sovereignty." },
+                    { title: "🌙 Evening Integration", desc: "Reflect on the day. What did your choices teach you about who you are?" }
+                ]
+            },
+            2: {
+                title: "Chamber 2: Sovereign Loop",
+                description: "The 9-step cycle that guides your decision-making and ensures alignment between identity and action.",
+                icon: "🔄",
+                completion: 85,
+                rituals: 38,
+                days: 142,
+                rituals_list: [
+                    { title: "🔍 Sense Check", desc: "What are your body and emotions telling you right now?" },
+                    { title: "🧭 Pattern Recognition", desc: "What pattern is this moment showing you?" },
+                    { title: "⚡ Action Decision", desc: "What sovereign choice will you make?" }
+                ]
+            },
+            3: {
+                title: "Chamber 3: Emotional Mastery",
+                description: "Feeling with wisdom. Not suppressing emotion, but understanding it as information.",
+                icon: "❤️",
+                completion: 60,
+                rituals: 28,
+                days: 98,
+                rituals_list: [
+                    { title: "💭 Emotion Mapping", desc: "Name the emotion. Where do you feel it? What is it telling you?" },
+                    { title: "🎯 Wisdom Extraction", desc: "What truth is this emotion pointing toward?" },
+                    { title: "🌊 Integration", desc: "How can you honor this emotion and move forward?" }
+                ]
+            },
+            4: {
+                title: "Chamber 4: Physical Presence",
+                description: "Your body as the anchor for sovereignty. Presence in the physical world.",
+                icon: "🧘",
+                completion: 70,
+                rituals: 32,
+                days: 115,
+                rituals_list: [
+                    { title: "🫁 Breath Anchor", desc: "Return to your breath. 3 conscious breaths. Feel your presence." },
+                    { title: "🚶 Conscious Movement", desc: "Move with intention. Feel every step." },
+                    { title: "🌍 Grounding", desc: "Connect with the earth. Feel your place in the world." }
+                ]
+            },
+            5: {
+                title: "Chamber 5: Mental Clarity",
+                description: "Your thoughts as tools, not masters. Clear thinking aligned with sovereignty.",
+                icon: "🧠",
+                completion: 75,
+                rituals: 35,
+                days: 128,
+                rituals_list: [
+                    { title: "🧹 Mental Clearing", desc: "What thoughts are serving you? What thoughts are limiting you?" },
+                    { title: "🎯 Focus Practice", desc: "Choose one thought to focus on. Why does it matter?" },
+                    { title: "💡 Insight Capture", desc: "What clarity emerged today?" }
+                ]
+            },
+            6: {
+                title: "Chamber 6: Creative Expression",
+                description: "Making what's true visible. Expressing your sovereignty through creation.",
+                icon: "🎨",
+                completion: 50,
+                rituals: 22,
+                days: 85,
+                rituals_list: [
+                    { title: "🎭 Expression Choice", desc: "How will you express yourself today?" },
+                    { title: "✨ Creation Time", desc: "Spend time creating something true." },
+                    { title: "🌟 Sharing", desc: "What truth did your creation reveal?" }
+                ]
+            }
+        };
+
+        function selectChamber(chamberId) {
+            const chamber = chambers[chamberId];
+            if (!chamber) return;
+
+            // Update sidebar
+            document.querySelectorAll('.sidebar-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            event.target.closest('.sidebar-item')?.classList.add('active');
+
+            // Update detail
+            const detail = document.getElementById('chamberDetail');
+            detail.innerHTML = `
+                <h2>${chamber.title}</h2>
+                <p>${chamber.description}</p>
+                
+                <div class="chamber-stats">
+                    <div class="stat-card">
+                        <div class="stat-value">${chamber.completion}%</div>
+                        <div class="stat-label">Completion</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">${chamber.rituals}</div>
+                        <div class="stat-label">Rituals Completed</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">${chamber.days}</div>
+                        <div class="stat-label">Days Consistent</div>
+                    </div>
+                </div>
+
+                <div class="rituals">
+                    <h3>Daily Rituals</h3>
+                    <ul class="ritual-list">
+                        ${chamber.rituals_list.map((ritual, i) => `
+                            <li class="ritual-item" onclick="alert('${ritual.title}: ${ritual.desc}')">
+                                <h4>${ritual.title}</h4>
+                                <p>${ritual.desc}</p>
+                            </li>
+                        `).join('')}
+                    </ul>
+                </div>
+
+                <div class="action-buttons">
+                    <button class="btn btn-primary" onclick="alert('Starting ${chamber.title} ritual...')">Begin Today's Ritual</button>
+                    <button class="btn btn-secondary" onclick="alert('Opening ${chamber.title} documentation...')">View Full Guide</button>
+                </div>
+            `;
+
+            detail.classList.add('fade-in');
+        }
+
+        function openModal(ritualId) {
+            const modal = document.getElementById('ritualModal');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalBody = document.getElementById('modalBody');
+
+            const rituals = {
+                ritual1: {
+                    title: "🌅 Morning Stillness",
+                    content: "Begin your day with 5 minutes of conscious presence. Place your hand over your heart. Feel your heartbeat. Say: 'I am still here.' This is not meditation. This is remembering. This is sovereignty."
+                },
+                ritual2: {
+                    title: "📝 Truth Journal",
+                    content: "Write one truth you discovered today. One way you chose sovereignty. One moment where you were fully present. This is not journaling. This is documentation of your becoming."
+                },
+                ritual3: {
+                    title: "🌙 Evening Integration",
+                    content: "Before sleep, reflect on the day. What did your choices teach you about who you are? What truth did you live? What will you do differently tomorrow? This is not reflection. This is integration."
+                }
+            };
+
+            const ritual = rituals[ritualId];
+            if (ritual) {
+                modalTitle.textContent = ritual.title;
+                modalBody.innerHTML = `<p style="color: #CBD5E1; line-height: 1.8;">${ritual.content}</p>`;
+                modal.classList.add('active');
+            }
+        }
+
+        function closeModal() {
+            document.getElementById('ritualModal').classList.remove('active');
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('ritualModal');
+            if (event.target == modal) {
+                modal.classList.remove('active');
+            }
+        }
+
+        // Initialize with Chamber 1
+        window.addEventListener('load', () => {
+            selectChamber(1);
+        });
+    </script>
+</body>
+</html>

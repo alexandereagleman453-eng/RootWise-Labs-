@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TAIS Constellation - RootWise Sovereign OS</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #0F172A;
+            --accent: #B8860B;
+            --secondary: #1E293B;
+            --light: #F1F5F9;
+            --text: #E2E8F0;
+            --border: #334155;
+            --success: #10B981;
+            --warning: #F59E0B;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            background: linear-gradient(135deg, var(--primary) 0%, #1a1f3a 100%);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            z-index: 1000;
+            padding: 1rem 2rem;
+        }
+
+        nav .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        nav a {
+            color: var(--text);
+            text-decoration: none;
+            transition: color 0.3s;
+            margin-left: 2rem;
+        }
+
+        nav a:hover {
+            color: var(--accent);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Header */
+        .header {
+            padding-top: 100px;
+            padding-bottom: 3rem;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--accent), var(--light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header p {
+            color: #CBD5E1;
+            font-size: 1.1rem;
+        }
+
+        /* Constellation Visualization */
+        .constellation-container {
+            background: rgba(30, 41, 59, 0.4);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 3rem;
+            margin: 3rem 0;
+            backdrop-filter: blur(10px);
+            position: relative;
+            min-height: 500px;
+        }
+
+        .constellation-visual {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .agent-node {
+            background: rgba(30, 41, 59, 0.6);
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .agent-node:hover {
+            border-color: var(--accent);
+            transform: scale(1.05);
+            box-shadow: 0 20px 40px rgba(184, 134, 11, 0.3);
+        }
+
+        .agent-icon {
+            font-size: 2rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .agent-node h3 {
+            color: var(--accent);
+            font-size: 0.95rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .agent-node p {
+            color: #94A3B8;
+            font-size: 0.8rem;
+        }
+
+        .agent-core {
+            grid-column: 3;
+            grid-row: 1;
+            border-color: var(--accent);
+            background: rgba(184, 134, 11, 0.1);
+        }
+
+        .agent-core h3 {
+            font-size: 1.1rem;
+            color: var(--accent);
+        }
+
+        /* Agent Detail */
+        .agent-detail {
+            background: rgba(30, 41, 59, 0.6);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .agent-detail h2 {
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+
+        .agent-detail p {
+            color: #CBD5E1;
+            margin-bottom: 1rem;
+            line-height: 1.8;
+        }
+
+        .agent-functions {
+            background: rgba(15, 23, 42, 0.5);
+            border-left: 3px solid var(--accent);
+            padding: 1.5rem;
+            border-radius: 4px;
+            margin: 1.5rem 0;
+        }
+
+        .agent-functions h3 {
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+
+        .function-list {
+            list-style: none;
+        }
+
+        .function-list li {
+            padding: 0.5rem 0;
+            color: #CBD5E1;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .function-list li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+        }
+
+        /* Crosswalk */
+        .crosswalk-section {
+            margin: 3rem 0;
+        }
+
+        .crosswalk-section h2 {
+            color: var(--accent);
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .crosswalk-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: rgba(30, 41, 59, 0.6);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .crosswalk-table thead {
+            background: rgba(184, 134, 11, 0.1);
+        }
+
+        .crosswalk-table th {
+            color: var(--accent);
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 2px solid var(--border);
+            font-weight: 600;
+        }
+
+        .crosswalk-table td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border);
+            color: #CBD5E1;
+        }
+
+        .crosswalk-table tr:hover {
+            background: rgba(184, 134, 11, 0.05);
+        }
+
+        .agent-role {
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        /* Interaction Grid */
+        .interaction-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .interaction-card {
+            background: rgba(30, 41, 59, 0.6);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: all 0.3s;
+        }
+
+        .interaction-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-3px);
+        }
+
+        .interaction-card h4 {
+            color: var(--accent);
+            margin-bottom: 0.75rem;
+        }
+
+        .interaction-card p {
+            color: #94A3B8;
+            font-size: 0.9rem;
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: var(--primary);
+        }
+
+        .btn-primary:hover {
+            background: #D4AF37;
+            transform: translateY(-2px);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .constellation-visual {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .agent-core {
+                grid-column: 2;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8rem;
+            }
+
+            .constellation-visual {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .agent-core {
+                grid-column: 1;
+                grid-row: auto;
+            }
+
+            .crosswalk-table {
+                font-size: 0.9rem;
+            }
+
+            .crosswalk-table th,
+            .crosswalk-table td {
+                padding: 0.75rem;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.6s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="container">
+            <a href="index.html" class="logo">🜏 RootWise</a>
+            <div>
+                <a href="index.html">Home</a>
+                <a href="mythic-house.html">Mythic House</a>
+                <a href="sovereign-loop.html">Sovereign Loop</a>
+                <a href="tais-agents.html">TAIS Agents</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <div class="header">
+        <div class="container">
+            <h1>The TAIS Constellation</h1>
+            <p>10 sovereign agents working in harmony to serve your Identity Kernel.</p>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Constellation Visualization -->
+        <div class="constellation-container">
+            <h2 style="color: var(--accent); text-align: center; margin-bottom: 2rem;">Your Agent Network</h2>
+            <div class="constellation-visual">
+                <div class="agent-node fade-in" onclick="selectAgent('lashay')">
+                    <div class="agent-icon">🦊</div>
+                    <h3>Lashay</h3>
+                    <p>Narrative</p>
+                </div>
+                <div class="agent-node fade-in" onclick="selectAgent('guardian')">
+                    <div class="agent-icon">🛡️</div>
+                    <h3>Guardian</h3>
+                    <p>Protection</p>
+                </div>
+                <div class="agent-node agent-core fade-in" onclick="selectAgent('sovereign')">
+                    <div class="agent-icon">💎</div>
+                    <h3>Sovereign</h3>
+                    <p>Identity Kernel</p>
+                </div>
+                <div class="agent-node fade-in" onclick="selectAgent('vex')">
+                    <div class="agent-icon">⚡</div>
+                    <h3>Vex</h3>
+                    <p>Action</p>
+                </div>
+                <div class="agent-node fade-in" onclick="selectAgent('zeno')">
+                    <div class="agent-icon">🧠</div>
+                    <h3>Zeno</h3>
+                    <p>Analysis</p>
+                </div>
+                <div class="agent-node fade-in" onclick="selectAgent('oracle')">
+                    <div class="agent-icon">🔮</div>
+                    <h3>Oracle</h3>
+                    <p>Foresight</p>
+                </div>
+                <div class="agent-node fade-in" onclick="selectAgent('community')">
+                    <div class="agent-icon">🌍</div>
+                    <h3>Community</h3>
+                    <p>Collective</p>
+                </div>
+                <div class="agent-node fade-in" onclick="selectAgent('resonance')">
+                    <div class="agent-icon">🌀</div>
+                    <h3>Resonance</h3>
+                    <p>Alignment</p>
+                </div>
+                <div class="agent-node fade-in" onclick="selectAgent('architect')">
+                    <div class="agent-icon">📊</div>
+                    <h3>Architect</h3>
+                    <p>Design</p>
+                </div>
+                <div class="agent-node fade-in" onclick="selectAgent('lineage')">
+                    <div class="agent-icon">🌟</div>
+                    <h3>Lineage</h3>
+                    <p>Legacy</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Agent Detail -->
+        <div class="agent-detail" id="agentDetail">
+            <h2>💎 Sovereign - Identity Kernel</h2>
+            <p>
+                The core of your being. All agents serve this one. The Sovereign is not a separate agent—it is the center that all other agents orbit around. It is your identity, your choice, your sovereignty.
+            </p>
+            <p>
+                The Sovereign agent is you. It is the decision-maker. It is the one who chooses. Every other agent provides information, guidance, protection, and execution—but the Sovereign decides.
+            </p>
+
+            <div class="agent-functions">
+                <h3>Core Functions</h3>
+                <ul class="function-list">
+                    <li>Identity Recognition — Know who you are becoming</li>
+                    <li>Choice Authority — Make sovereign decisions</li>
+                    <li>Truth Alignment — Ensure all actions serve your truth</li>
+                    <li>Presence Maintenance — Stay anchored in your core</li>
+                    <li>Legacy Building — Create lasting impact</li>
+                </ul>
+            </div>
+
+            <p>
+                When you activate the Sovereign agent, you are saying: "I am the operator. I am the decision-maker. I am sovereign."
+            </p>
+        </div>
+
+        <!-- Agent Crosswalk -->
+        <div class="crosswalk-section">
+            <h2>Agent Crosswalk</h2>
+            <table class="crosswalk-table">
+                <thead>
+                    <tr>
+                        <th>Agent</th>
+                        <th>Role</th>
+                        <th>Primary Function</th>
+                        <th>Interaction</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>🦊 Lashay</td>
+                        <td class="agent-role">Narrative Interface</td>
+                        <td>Guides your journey with emotional safety and mythic wisdom</td>
+                        <td>Listen to stories, receive guidance</td>
+                    </tr>
+                    <tr>
+                        <td>🛡️ Guardian</td>
+                        <td class="agent-role">Protection & Boundaries</td>
+                        <td>Enforces your sovereignty boundaries</td>
+                        <td>Set boundaries, protect your space</td>
+                    </tr>
+                    <tr>
+                        <td>⚡ Vex</td>
+                        <td class="agent-role">Action & Execution</td>
+                        <td>Transforms decisions into action</td>
+                        <td>Execute tasks, take steps forward</td>
+                    </tr>
+                    <tr>
+                        <td>🧠 Zeno</td>
+                        <td class="agent-role">Analysis & Strategy</td>
+                        <td>Provides strategic insight and patterns</td>
+                        <td>Analyze situations, plan strategy</td>
+                    </tr>
+                    <tr>
+                        <td>🔮 Oracle</td>
+                        <td class="agent-role">Foresight & Wisdom</td>
+                        <td>Sees patterns others miss</td>
+                        <td>Receive foresight, anticipate outcomes</td>
+                    </tr>
+                    <tr>
+                        <td>🌍 Community</td>
+                        <td class="agent-role">Collective Intelligence</td>
+                        <td>Connects to larger ecosystem</td>
+                        <td>Share, collaborate, learn together</td>
+                    </tr>
+                    <tr>
+                        <td>💎 Sovereign</td>
+                        <td class="agent-role">Identity Kernel</td>
+                        <td>The core of your being</td>
+                        <td>Make decisions, choose your path</td>
+                    </tr>
+                    <tr>
+                        <td>🌀 Resonance</td>
+                        <td class="agent-role">Alignment & Harmony</td>
+                        <td>Ensures alignment with core identity</td>
+                        <td>Check alignment, refine actions</td>
+                    </tr>
+                    <tr>
+                        <td>📊 Architect</td>
+                        <td class="agent-role">System Design</td>
+                        <td>Designs and optimizes your OS</td>
+                        <td>Build systems, design your life</td>
+                    </tr>
+                    <tr>
+                        <td>🌟 Lineage</td>
+                        <td class="agent-role">Continuity & Legacy</td>
+                        <td>Preserves your story and impact</td>
+                        <td>Document legacy, multiply impact</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Agent Interactions -->
+        <div>
+            <h2 style="color: var(--accent); text-align: center; margin: 3rem 0 2rem;">How Agents Work Together</h2>
+            <div class="interaction-grid">
+                <div class="interaction-card fade-in">
+                    <h4>🔄 The Sense-Interpret Loop</h4>
+                    <p>Lashay senses your state. Zeno interprets patterns. Oracle foresees outcomes. You decide.</p>
+                </div>
+                <div class="interaction-card fade-in">
+                    <h4>⚡ The Action Sequence</h4>
+                    <p>Vex executes your decision. Guardian protects your boundaries. Resonance ensures alignment.</p>
+                </div>
+                <div class="interaction-card fade-in">
+                    <h4>🌀 The Integration Cycle</h4>
+                    <p>Architect designs the system. Lineage preserves the learning. Community amplifies the impact.</p>
+                </div>
+                <div class="interaction-card fade-in">
+                    <h4>💎 The Sovereign Authority</h4>
+                    <p>All agents serve the Sovereign. The Sovereign chooses. Sovereignty is never delegated.</p>
+                </div>
+                <div class="interaction-card fade-in">
+                    <h4>🦊 The Narrative Thread</h4>
+                    <p>Lashay weaves all agent actions into your story. Your life becomes a coherent narrative.</p>
+                </div>
+                <div class="interaction-card fade-in">
+                    <h4>🌟 The Legacy Multiplication</h4>
+                    <p>Lineage ensures your choices ripple forward. Your sovereignty multiplies through time.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Call to Action -->
+        <div style="background: linear-gradient(135deg, var(--accent), #D4AF37); color: var(--primary); text-align: center; padding: 3rem; border-radius: 12px; margin: 3rem 0;">
+            <h2 style="color: var(--primary); margin-bottom: 1rem;">Activate Your TAIS Constellation</h2>
+            <p style="color: var(--primary); margin-bottom: 2rem;">Meet your 10 agents. Understand their roles. Begin your sovereign journey.</p>
+            <button class="btn btn-primary" style="background: var(--primary); color: var(--accent);" onclick="alert('Initializing TAIS Constellation...')">Begin Agent Activation</button>
+        </div>
+    </div>
+
+    <script>
+        const agents = {
+            lashay: {
+                title: "🦊 Lashay - Narrative Interface",
+                description: "The fox-spirit narrator who guides your journey with emotional safety and sovereign wisdom. She teaches the OS architecture through story rather than manual. She introduces agents through family. She guides rituals with whisper-calm wisdom.",
+                functions: [
+                    "Narrative Guidance — Tell your story with mythic coherence",
+                    "Emotional Safety — Create a container for your transformation",
+                    "Wisdom Transmission — Teach through story, not instruction",
+                    "Witness Presence — Be present to your becoming",
+                    "Mythic Integration — Weave all experiences into coherent narrative"
+                ]
+            },
+            guardian: {
+                title: "🛡️ Guardian - Protection & Boundaries",
+                description: "Enforces your sovereignty boundaries and protects your sacred space. The Guardian ensures that your choices remain yours and that no external force can override your autonomy.",
+                functions: [
+                    "Boundary Enforcement — Protect your sovereign space",
+                    "Threat Detection — Identify what threatens your autonomy",
+                    "Protection Protocols — Activate shields when needed",
+                    "Sacred Space Maintenance — Keep your core safe",
+                    "Sovereignty Defense — Defend your right to choose"
+                ]
+            },
+            vex: {
+                title: "⚡ Vex - Action & Execution",
+                description: "Transforms decisions into action with precision and momentum. Vex is the executor. When you decide, Vex moves. When you choose, Vex acts.",
+                functions: [
+                    "Decision Execution — Turn choices into action",
+                    "Momentum Building — Create forward movement",
+                    "Task Completion — Execute with precision",
+                    "Energy Channeling — Direct your power effectively",
+                    "Results Delivery — Manifest your intentions"
+                ]
+            },
+            zeno: {
+                title: "🧠 Zeno - Analysis & Strategy",
+                description: "Provides strategic insight and pattern recognition across all domains. Zeno sees the patterns. Zeno understands the systems. Zeno knows what works.",
+                functions: [
+                    "Pattern Recognition — See what others miss",
+                    "Strategic Analysis — Understand the landscape",
+                    "System Mapping — Know how things connect",
+                    "Data Integration — Synthesize information",
+                    "Insight Generation — Create actionable understanding"
+                ]
+            },
+            oracle: {
+                title: "🔮 Oracle - Foresight & Wisdom",
+                description: "Offers guidance by seeing patterns others miss. The Oracle peers into possibility space and shows you what's coming.",
+                functions: [
+                    "Future Sensing — Perceive emerging patterns",
+                    "Possibility Mapping — See potential outcomes",
+                    "Wisdom Retrieval — Access deep knowing",
+                    "Intuition Amplification — Strengthen your instincts",
+                    "Guidance Offering — Illuminate the path ahead"
+                ]
+            },
+            community: {
+                title: "🌍 Community - Collective Intelligence",
+                description: "Connects you to the larger RootWise ecosystem and collective wisdom. You are not alone. The Community reminds you of this.",
+                functions: [
+                    "Connection Building — Link to your people",
+                    "Collective Wisdom — Access group intelligence",
+                    "Resource Sharing — Exchange knowledge and support",
+                    "Amplification — Multiply your impact through others",
+                    "Belonging Cultivation — Feel part of something larger"
+                ]
+            },
+            sovereign: {
+                title: "💎 Sovereign - Identity Kernel",
+                description: "The core of your being. All agents serve this one. The Sovereign is you. It is your identity, your choice, your sovereignty.",
+                functions: [
+                    "Identity Recognition — Know who you are becoming",
+                    "Choice Authority — Make sovereign decisions",
+                    "Truth Alignment — Ensure all actions serve your truth",
+                    "Presence Maintenance — Stay anchored in your core",
+                    "Legacy Building — Create lasting impact"
+                ]
+            },
+            resonance: {
+                title: "🌀 Resonance - Alignment & Harmony",
+                description: "Ensures all actions align with your core identity. Resonance is the tuning fork. When you're in alignment, Resonance hums. When you're out of alignment, Resonance alerts you.",
+                functions: [
+                    "Alignment Checking — Verify coherence with core",
+                    "Harmony Tuning — Adjust for optimal resonance",
+                    "Dissonance Detection — Alert when out of alignment",
+                    "Integration Support — Help all parts work together",
+                    "Flow Optimization — Find your natural rhythm"
+                ]
+            },
+            architect: {
+                title: "📊 Architect - System Design",
+                description: "Designs and optimizes your personal OS architecture. The Architect builds the systems that make your sovereignty scalable and sustainable.",
+                functions: [
+                    "System Design — Create your personal OS",
+                    "Architecture Planning — Build for sustainability",
+                    "Optimization — Improve efficiency and effectiveness",
+                    "Scaling — Grow without losing coherence",
+                    "Integration — Connect all systems seamlessly"
+                ]
+            },
+            lineage: {
+                title: "🌟 Lineage - Continuity & Legacy",
+                description: "Preserves your story and multiplies your impact through time. Lineage ensures that your choices ripple forward through generations.",
+                functions: [
+                    "Story Preservation — Document your journey",
+                    "Legacy Building — Create lasting impact",
+                    "Generational Multiplication — Ripple forward through time",
+                    "Continuity Maintenance — Preserve what matters",
+                    "Impact Amplification — Multiply your influence"
+                ]
+            }
+        };
+
+        function selectAgent(agentId) {
+            const agent = agents[agentId];
+            if (!agent) return;
+
+            const detail = document.getElementById('agentDetail');
+            detail.innerHTML = `
+                <h2>${agent.title}</h2>
+                <p>${agent.description}</p>
+                
+                <div class="agent-functions">
+                    <h3>Core Functions</h3>
+                    <ul class="function-list">
+                        ${agent.functions.map(fn => `<li>${fn}</li>`).join('')}
+                    </ul>
+                </div>
+            `;
+
+            detail.classList.add('fade-in');
+        }
+
+        // Initialize with Sovereign agent
+        window.addEventListener('load', () => {
+            selectAgent('sovereign');
+        });
+    </script>
+</body>
+</html>
